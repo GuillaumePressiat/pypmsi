@@ -1,0 +1,132 @@
+import polars as pl
+import re
+
+def parse_dates(df: pl.DataFrame, patterns: str = "(dt|dat|d8).*") -> pl.DataFrame:
+    """Mettre les dates au format %d%m%Y au format date
+
+    Args:
+        df (pl.DataFrame): Dataframe à parser
+        patterns (str, optional): Pattern regex des noms des colonnes date à parser
+
+    Returns:
+        pl.DataFrame: Dataframe avec les dates au format date
+    """
+    re_dt = re.compile(patterns)
+
+    df = df.with_columns(
+        [
+            pl.col(i).str.strptime(pl.Date, fmt="%d%m%Y", strict=False).alias(i)
+            for i in list(filter(re_dt.match, df.columns))
+        ]
+    )
+    return df
+
+
+def parse_integers(df: pl.DataFrame, columns_l: list) -> pl.DataFrame:
+    """Mettre certaines colonnes au format integer
+
+    Args:
+        df (pl.DataFrame): Dataframe à parser
+        columns_l (str): Liste contenant les noms des colonnes à parser en integer
+
+    Returns:
+        pl.DataFrame: Dataframe avec les entiers formatés
+    """
+    df = df.with_columns(
+        [pl.col(i).cast(pl.Int64, strict=False).alias(i) for i in columns_l]
+    )
+    return df
+
+# Charger les formats pmeasyr (formats ministériels)
+def get_formats(annee: int, champ: str, table: str) -> pl.DataFrame:
+    """Charger les formats PMSI ministériels pour une année, une table d'un champ
+
+    Args:
+        annee (int): Année de la période PMSI (2 digits)
+        champ (str): Champ PMSI (mco, ssr, psy, had)
+        table (str): Table considérée (exemple: rsa, rss, rsa_ano, rsa_actes, rsa_um)
+
+    Returned:
+        pl.DataFrame: Formats PMSI ministériels
+    """
+    formats = pl.read_json("pymeasy/formats/pmeasyr_formats.json")
+    formats_temp = (
+        formats.filter(pl.col("champ") == champ)
+        .filter(pl.col("table") == table)
+        .filter(pl.col("an") == annee)
+        .with_columns(pl.col("nom").str.to_lowercase().alias("nom"))
+        .with_columns(pl.col("longueur").cast(pl.Int32).alias("longueur"))
+    )
+
+    if (annee > "12") & (annee < "20") & (champ == "mco") & (table == "rsa_um"):
+        formats_temp = formats_temp.with_columns(
+            pl.when(pl.col("nom") == "nseqrum")
+            .then(pl.lit(5))
+            .otherwise(pl.col("longueur"))
+            .alias("longueur")
+        )
+
+    return formats_temp
+
+
+# Charger les formats pmeasyr (expressions régulières et curseurs)
+def get_patterns(annee4: int, table: str) -> pl.DataFrame:
+    """Charger les patterns des zones variables
+
+    Args:
+        annee4 (int): Année de la période PMSI (4 caractères)
+        table (str): Table considérée
+
+    Returns:
+        pl.DataFrame: Pattern regex et curseurs
+    """
+    formats = pl.read_json("pymeasy/formats/pmeasyr_formats.json")
+    formats_temp = formats.filter(pl.col("table") == table).filter(
+        pl.col("an") == annee4
+    )
+    return formats_temp
+
+
+def parse_pmsi_fwf(
+    df: pl.DataFrame, champ: str, table: str, annee: int
+) -> pl.DataFrame:
+    """Découpage d'un fichier partie fixe préalablement chargé dans un pl.DataFrame (colonne l)
+
+    Args:
+        df (pl.DataFrame): DataFrame à parser
+        champ (str): Champ du format du df
+        table (str): Table du format du df
+        annee (int): Année de la période PMSI (4 digits)
+
+    Returns:
+        pl.DataFrame: Dataframe découpé
+    """
+    formats = get_formats(str(annee)[2:4], champ, table)
+    column_names = formats["nom"].to_pandas().tolist()
+    widths = (
+        formats.filter(~pl.col("longueur").is_null())["longueur"].to_pandas().tolist()
+    )
+    columns_i = formats.filter(pl.col("type") == "i")["nom"].to_pandas().tolist()
+
+    if table in ["rum", "rsa", "rhs", "rha", "rps", "rpsa"]:
+        widths.append(int(1e9))
+
+    slice_tuples = []
+    offset = 0
+
+    for i in widths:
+        slice_tuples.append((offset, i))
+        offset += i
+
+    df = df.with_columns(
+        [
+            pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip().alias(col)
+            for slice_tuple, col in zip(slice_tuples, column_names)
+        ]
+    ).drop("l")
+
+    df = parse_dates(df)
+    df = parse_integers(df, columns_i)
+
+    return df
+
