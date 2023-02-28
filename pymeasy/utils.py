@@ -142,4 +142,4 @@ def polars_to_pandas(df_d):
     if (type(df_d) == pl.DataFrame):
         return df_d.to_pandas()
     elif (type(df_d) == dict):
-            return {k: polars_to_pandas(v) for k, v in df_d.items()}
+        return {k: polars_to_pandas(v) for k, v in df_d.items()}
