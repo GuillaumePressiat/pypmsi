@@ -130,3 +130,16 @@ def parse_pmsi_fwf(
 
     return df
 
+def polars_to_pandas(df_d):
+    """Convertir une sortie pymeasy polars en pandas
+    
+    Args:
+        df_d (pl.DataFrame ou dict de pl.DataFrame): Sortie d'une fonction i* pymeasy
+    
+    Returns:
+        TYPE: pd.DataFrame ou dict de pd.DataFrame
+    """
+    if (type(df_d) == pl.DataFrame):
+        return df_d.to_pandas()
+    elif (type(df_d) == dict):
+            return {k: polars_to_pandas(v) for k, v in df_d.items()}
