@@ -2,7 +2,7 @@
 name = "pymeasy"
 version = "0.1.0"
 description = ""
-authors = ["dridk <guillaume.pressiat@chu-brest.fr>"]
+authors = ["GuillaumePressiat <guillaume.pressiat@chu-brest.fr>"]
 license = "AGPL3"
 readme = "README.md"
 
