@@ -102,11 +102,11 @@ def parse_pmsi_fwf(
         pl.DataFrame: Dataframe découpé
     """
     formats = get_formats(str(annee)[2:4], champ, table)
-    column_names = formats["nom"].to_pandas().tolist()
+    column_names = formats["nom"].to_list()
     widths = (
-        formats.filter(~pl.col("longueur").is_null())["longueur"].to_pandas().tolist()
+        formats.filter(~pl.col("longueur").is_null())["longueur"].to_list()
     )
-    columns_i = formats.filter(pl.col("type") == "i")["nom"].to_pandas().tolist()
+    columns_i = formats.filter(pl.col("type") == "i")["nom"].to_list()
 
     if table in ["rum", "rsa", "rhs", "rha", "rps", "rpsa"]:
         widths.append(int(1e9))
