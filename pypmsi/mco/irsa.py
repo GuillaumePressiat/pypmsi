@@ -64,7 +64,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
 
     if typi == 1:
         # retourne la partie fixe uniquement
-        rsa = {"rsa": df.drop(["za"])}
+        rsa = {"rsa": df.drop(["za"]).drop(list(filter(re.compile('^fil').match, df.columns)))}
         return rsa
 
     df = df.with_columns(pl.lit(0).alias("aut_s"))
@@ -215,7 +215,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                     "zdas",
                     "zactes",
                 ]
-            )
+            ).drop(list(filter(re.compile('^fil').match, df.columns)))
         }
         return rsa
 
@@ -313,7 +313,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
             "zactes",
             "za",
         ]
-    )
+    ).drop(list(filter(re.compile('^fil').match, df.columns)))
 
     rsa = {"rsa": df, "actes": actes, "das": das, "rsa_um": rsa_um}
 
