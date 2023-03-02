@@ -4,8 +4,17 @@ from pypmsi.utils import *
 
 
 def irsfa(finess, annee : int, mois : int, path : str):
-
+    """Découper les RSFA, rafael
     
+    Args:
+        finess (TYPE): Description
+        annee (int): Description
+        mois (int): Description
+        path (str): Description
+    
+    Returns:
+        TYPE: Dictionnaire contenant les différents RSFA A, B, C, H, L, M, P
+    """
     file_in = (
         path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rsfa"
     )

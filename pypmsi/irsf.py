@@ -4,8 +4,18 @@ from pypmsi.utils import *
 
 
 def irsf(finess, annee : int, mois : int, path : str, ini : bool = True):
-
+    """Découper le fichier RSF
     
+    Args:
+        finess (TYPE): Description
+        annee (int): Description
+        mois (int): Description
+        path (str): Description
+        ini (bool, optional): Lire le fichier rsf.ini.txt (True) ou le fichier rsf.txt
+    
+    Returns:
+        TYPE: Dictionnaire contenant les différents RSF A, B, C, H, L, M, P
+    """
     if ini:
         ext = "rsf.ini.txt"
     else:
