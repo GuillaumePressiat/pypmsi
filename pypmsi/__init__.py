@@ -16,4 +16,6 @@ from pypmsi.fichcomps import idmi_mco
 from pypmsi.iano_mco import iano_mco
 
 from pypmsi.irsfa import irsfa
+from pypmsi.irsf import irsf
+
 
