@@ -19,9 +19,9 @@ def irsfa(finess, annee : int, mois : int, path : str):
     else:
         typi_r = 8
 
-        for typer in ['A', 'B', 'C', 'H', 'L', 'M',  'P']:
-            df_temp = df.filter(pl.col('l').str.slice(typi_r, 1) == typer)
-            rsf[typer] = parse_pmsi_trsf(df_temp,  'rsf', 'rafael', annee, typer)
+    for typer in ['A', 'B', 'C', 'H', 'L', 'M',  'P']:
+        df_temp = df.filter(pl.col('l').str.slice(typi_r, 1) == typer)
+        rsf[typer] = parse_pmsi_trsf(df_temp,  'rsf', 'rafael', annee, typer)
 
     return rsf
 
