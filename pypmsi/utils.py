@@ -130,6 +130,56 @@ def parse_pmsi_fwf(
 
     return df
 
+
+def parse_pmsi_trsf(
+    df: pl.DataFrame, champ: str, table: str, annee: int, typer : str
+) -> pl.DataFrame:
+    """Découpage d'un fichier partie fixe préalablement chargé dans un pl.DataFrame (colonne l)
+
+    Args:
+        df (pl.DataFrame): DataFrame à parser
+        champ (str): Champ du format du df
+        table (str): Table du format du df
+        annee (int): Année de la période PMSI (4 digits)
+
+    Returns:
+        pl.DataFrame: Dataframe découpé
+    """
+    formats = get_formats(str(annee)[2:4], champ, table)
+    formats = formats.filter(pl.col('Typer') == typer)
+
+    column_names = formats["nom"].to_list()
+    widths = (
+        formats.filter(~pl.col("longueur").is_null())["longueur"].to_list()
+    )
+    columns_i = formats.filter(pl.col("type") == "i")["nom"].to_list()
+
+    slice_tuples = []
+    offset = 0
+
+    for i in widths:
+        slice_tuples.append((offset, i))
+        offset += i
+
+    df = (df
+          .lazy()
+          .with_columns(
+        [
+            pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip().alias(col)
+            for slice_tuple, col in zip(slice_tuples, column_names)
+        ]
+    )
+          .collect()
+          .drop("l")
+         )
+    df = parse_dates(df)
+    df = parse_integers(df, columns_i)
+
+
+    return df
+
+
+
 def polars_to_pandas(df_d):
     """Convertir une sortie pymeasy polars en pandas
     
