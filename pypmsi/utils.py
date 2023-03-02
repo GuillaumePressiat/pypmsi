@@ -143,3 +143,15 @@ def polars_to_pandas(df_d):
         return df_d.to_pandas()
     elif (type(df_d) == dict):
         return {k: polars_to_pandas(v) for k, v in df_d.items()}
+
+def noyau_pmsi(finess, annee : int, mois : int, path : str, **kwargs):
+
+    noyau = {'finess' : finess, 'annee' : annee, 'mois' : mois, 'path' : path}
+    for k,v in kwargs.items():
+        noyau[k] = v
+    return noyau
+
+def fichier_pmsi(p : dict, extension = "rsa"):
+    f = str(p['finess']) + "." + str(p['annee']) + "." + str(p['mois']) + "." + extension
+    return f
+
