@@ -1,6 +1,7 @@
 
 import polars as pl
 from pypmsi.utils import *
+import re
 
 # fonction de lecture des RSA entre 2016 et 2022
 def irum(
@@ -20,7 +21,7 @@ def irum(
         dict: Dictionnaire contenant des dataframe
     """
 
-    # ok depuis 2016 pour le moment
+    # ok entre 2012 et 2023 sauf 2015 pour le moment
 
     # 4 types d'imports (typi)
     # # 1          : partie fixe uniquement
@@ -59,7 +60,7 @@ def irum(
 
     if typi == 1:
         # retourne la partie fixe uniquement
-        rum = {"rum": df.drop(["zad", "fil1", "fil2"])}
+        rum = {"rum": df.drop(["zad"]).drop(list(filter(re.compile('^fil').match, df.columns)))}
         return rum
 
     # Définition des curseurs zones variables
@@ -156,7 +157,7 @@ def irum(
     if typi == 2:
         # retourne partie fixe + stream
         rum = {
-            "rum": df.drop(["zad", "fil1", "fil2", "zactes", "zdas", "zdad", "ACTES"])
+            "rum": df.drop(["zad", "zactes", "zdas", "zdad", "ACTES"].drop(list(filter(re.compile('^fil').match, df.columns))))
         }
         return rum
 
@@ -205,8 +206,6 @@ def irum(
             "lacte_e",
             "ldas_e",
             "ldas_s",
-            "fil1",
-            "fil2",
             "ACTES",
             "dad",
             "das",
@@ -214,7 +213,7 @@ def irum(
             "zactes",
             "zdas",
         ]
-    )
+    ).drop(list(filter(re.compile('^fil').match, df.columns)))
 
     # résultat sous forme d'un dictionnaire
     rum = {"rum": df, "actes": actes, "dad": dad, "das": das}
