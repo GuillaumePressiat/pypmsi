@@ -118,12 +118,17 @@ def parse_pmsi_fwf(
         slice_tuples.append((offset, i))
         offset += i
 
-    df = df.with_columns(
-        [
-            pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip().alias(col)
-            for slice_tuple, col in zip(slice_tuples, column_names)
-        ]
-    ).drop("l")
+    df = (df
+          .lazy()
+          .with_columns(
+              [
+                  pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip().alias(col)
+                  for slice_tuple, col in zip(slice_tuples, column_names)
+              ]
+          )
+          .drop("l")
+          .collect()
+         )
 
     df = parse_dates(df)
     df = parse_integers(df, columns_i)
@@ -164,14 +169,15 @@ def parse_pmsi_trsf(
     df = (df
           .lazy()
           .with_columns(
-        [
-            pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip().alias(col)
-            for slice_tuple, col in zip(slice_tuples, column_names)
-        ]
-    )
-          .collect()
+              [
+                  pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip().alias(col)
+                  for slice_tuple, col in zip(slice_tuples, column_names)
+              ]
+          )
           .drop("l")
+          .collect()
          )
+
     df = parse_dates(df)
     df = parse_integers(df, columns_i)
 
