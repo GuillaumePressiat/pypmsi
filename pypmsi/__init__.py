@@ -9,13 +9,13 @@ from pypmsi.utils import parse_pmsi_fwf
 from pypmsi.utils import parse_dates
 from pypmsi.utils import parse_integers
 
-from pypmsi.irsa import irsa
-from pypmsi.irum import irum
-from pypmsi.fichcomps import imed_mco
-from pypmsi.fichcomps import idmi_mco
-from pypmsi.iano_mco import iano_mco
+from pypmsi.mco.irsa import irsa
+from pypmsi.mco.irum import irum
+from pypmsi.mco.fichcomps import imed_mco
+from pypmsi.mco.fichcomps import idmi_mco
+from pypmsi.mco.iano_mco import iano_mco
 
-from pypmsi.irsfa import irsfa
-from pypmsi.irsf import irsf
+from pypmsi.mco.irsfa import irsfa
+from pypmsi.mco.irsf import irsf
 
 
