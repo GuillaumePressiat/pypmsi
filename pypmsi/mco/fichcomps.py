@@ -40,8 +40,8 @@ def imed_mco(finess, annee : int, mois : int, path : str, typmed : str = "in") -
         df.lazy()
         .with_columns(
             [
-                (pl.col("prix") / 1000).alias("prix"),
-                (pl.col("nbadm") / 1000).alias("nbadm"),
+                (pl.col("prix").cast(pl.Int64, strict=False) / 1000).alias("prix"),
+                (pl.col("nbadm").cast(pl.Int64, strict=False) / 1000).alias("nbadm"),
             ]
         )
         .collect()
@@ -88,7 +88,7 @@ def idmi_mco(finess, annee : int, mois : int, path : str, typdmi : str = "in") -
         df.lazy()
         .with_columns(
             [
-                (pl.col("prix") / 1000).alias("prix"),
+                (pl.col("prix").cast(pl.Int64, strict=False) / 1000).alias("prix"),
                 pl.col("nbpose").cast(pl.Int64).alias("nbpose"),
             ]
         )
