@@ -1,5 +1,5 @@
 import polars as pl
-from pymeasy.utils import *
+from pypmsi.utils import *
 
 
 def imed_mco(finess, annee : int, mois : int, path : str, typmed : str = "in") -> pl.DataFrame:

@@ -1,5 +1,5 @@
 import polars as pl
-from pymeasy.utils import *
+from pypmsi.utils import *
 
 def iano_mco(finess, annee : int, mois : int, path : str, typano :str ="in") -> pl.DataFrame:
     """Découper le ano in ou out du mco

@@ -1,6 +1,6 @@
 
 import polars as pl
-from pymeasy.utils import *
+from pypmsi.utils import *
 
 def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bool = True) -> dict:
     """Découpage des RSA ; 2011 à 2023

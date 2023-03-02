@@ -1,6 +1,6 @@
 
 import polars as pl
-from pymeasy.utils import *
+from pypmsi.utils import *
 
 # fonction de lecture des RSA entre 2016 et 2022
 def irum(
