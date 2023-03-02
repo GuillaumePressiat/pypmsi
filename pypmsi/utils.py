@@ -49,7 +49,7 @@ def get_formats(annee: int, champ: str, table: str) -> pl.DataFrame:
     Returned:
         pl.DataFrame: Formats PMSI ministériels
     """
-    formats = pl.read_json("pymeasy/formats/pmeasyr_formats.json")
+    formats = pl.read_json("pypmsi/formats/pmeasyr_formats.json")
     formats_temp = (
         formats.filter(pl.col("champ") == champ)
         .filter(pl.col("table") == table)
@@ -80,7 +80,7 @@ def get_patterns(annee4: int, table: str) -> pl.DataFrame:
     Returns:
         pl.DataFrame: Pattern regex et curseurs
     """
-    formats = pl.read_json("pymeasy/formats/pmeasyr_formats.json")
+    formats = pl.read_json("pypmsi/formats/pmeasyr_formats.json")
     formats_temp = formats.filter(pl.col("table") == table).filter(
         pl.col("an") == annee4
     )
