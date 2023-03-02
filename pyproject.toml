@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pymeasy"
+name = "pypmsi"
 version = "0.1.0"
 description = ""
 authors = ["GuillaumePressiat <guillaume.pressiat@chu-brest.fr>"]

@@ -1,4 +1,4 @@
-# pymeasy
+# pypmsi
 
 Lire les fichiers du PMSI avec python / pola.rs
 
@@ -7,13 +7,13 @@ Lire les fichiers du PMSI avec python / pola.rs
 
 
 ```sh
-git clone https://github.com/GuillaumePressiat/pymeasy.git
+git clone https://github.com/GuillaumePressiat/pypmsi.git
 ```
 
 avec pip
 
 ```sh
-pip install dist/pymeasy-0.1.0-py3-none-any.whl
+pip install dist/pypmsi-0.1.0-py3-none-any.whl
 ```
 
 ## Exemple
@@ -21,7 +21,7 @@ pip install dist/pymeasy-0.1.0-py3-none-any.whl
 
 ```python
 import polars
-import pymeasy as pm
+import pypmsi as pm
 ```
 
 ```python
