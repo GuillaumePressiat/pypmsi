@@ -24,7 +24,7 @@ def irsfa(finess, annee : int, mois : int, path : str):
         rsf[typer] = parse_pmsi_trsf(df_temp,  'rsf', 'rafael', annee, typer)
         
         rsf[typer] = parse_numerics(rsf[typer], '(^mt)|(^tt)|pu|tarif|coeff|taux', 2)
-        rsf[typer] = parse_numerics(rsf[typer], 'quant|qte|delai', 0)
+        rsf[typer] = parse_integers_regex(rsf[typer], 'quant|qte|delai')
 
 
     return rsf
