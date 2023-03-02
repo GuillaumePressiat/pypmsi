@@ -32,8 +32,27 @@ def parse_integers(df: pl.DataFrame, columns_l: list) -> pl.DataFrame:
     Returns:
         pl.DataFrame: Dataframe avec les entiers formatés
     """
+
     df = df.with_columns(
         [pl.col(i).cast(pl.Int64, strict=False).alias(i) for i in columns_l]
+    )
+    return df
+
+def parse_numerics(df: pl.DataFrame, patterns: str, digits = 2) -> pl.DataFrame:
+    """Mettre certaines colonnes au format nombre
+
+    Args:
+        df (pl.DataFrame): Dataframe à parser
+        columns_l (str): Liste contenant les noms des colonnes à parser en integer
+
+    Returns:
+        pl.DataFrame: Dataframe avec les entiers formatés
+    """
+    
+    re_dt = re.compile(patterns)
+    
+    df = df.with_columns(
+        [(pl.col(i).cast(pl.Int64, strict=False) / 10**digits).alias(i) for i in list(filter(re_dt.match, df.columns))]
     )
     return df
 

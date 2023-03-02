@@ -4,17 +4,8 @@ from pypmsi.utils import *
 
 
 def irsfa(finess, annee : int, mois : int, path : str):
-    """Découper les RSFA, rafael
+
     
-    Args:
-        finess (TYPE): Description
-        annee (int): Description
-        mois (int): Description
-        path (str): Description
-    
-    Returns:
-        TYPE: Dictionnaire contenant les différents RSFA A, B, C, H, L, M, P
-    """
     file_in = (
         path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rsfa"
     )
@@ -31,6 +22,10 @@ def irsfa(finess, annee : int, mois : int, path : str):
     for typer in ['A', 'B', 'C', 'H', 'L', 'M',  'P']:
         df_temp = df.filter(pl.col('l').str.slice(typi_r, 1) == typer)
         rsf[typer] = parse_pmsi_trsf(df_temp,  'rsf', 'rafael', annee, typer)
+        
+        rsf[typer] = parse_numerics(rsf[typer], '(^mt)|(^tt)|pu|tarif|coeff|taux', 2)
+        rsf[typer] = parse_numerics(rsf[typer], 'quant|qte|delai', 0)
+
 
     return rsf
 

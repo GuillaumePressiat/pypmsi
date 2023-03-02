@@ -4,18 +4,8 @@ from pypmsi.utils import *
 
 
 def irsf(finess, annee : int, mois : int, path : str, ini : bool = True):
-    """Découper le fichier RSF
+
     
-    Args:
-        finess (TYPE): Description
-        annee (int): Description
-        mois (int): Description
-        path (str): Description
-        ini (bool, optional): Lire le fichier rsf.ini.txt (True) ou le fichier rsf.txt
-    
-    Returns:
-        TYPE: Dictionnaire contenant les différents RSF A, B, C, H, L, M, P
-    """
     if ini:
         ext = "rsf.ini.txt"
     else:
@@ -37,6 +27,10 @@ def irsf(finess, annee : int, mois : int, path : str, ini : bool = True):
     for typer in ['A', 'B', 'C', 'H', 'L', 'M',  'P']:
         df_temp = df.filter(pl.col('l').str.slice(typi_r, 1) == typer)
         rsf[typer] = parse_pmsi_trsf(df_temp,  'rsf', 'rsf', annee, typer)
+        
+        rsf[typer] = parse_numerics(rsf[typer], '(^mt)|(^tt)|pu|tarif|coeff|taux', 2)
+        rsf[typer] = parse_numerics(rsf[typer], 'quant|qte', 0)
+
 
     return rsf
 
