@@ -8,12 +8,13 @@ Lire les fichiers du PMSI avec python / pola.rs
 
 ```sh
 git clone https://github.com/GuillaumePressiat/pypmsi.git
+poetry install
 ```
 
 avec pip
 
 ```sh
-pip install dist/pypmsi-0.1.0-py3-none-any.whl
+pip install https://github.com/GuillaumePressiat/pypmsi/releases/latest/download/pypmsi-0.1.0-py3-none-any.whl
 ```
 
 ## Exemple
