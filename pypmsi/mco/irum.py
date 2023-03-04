@@ -2,8 +2,12 @@
 import polars as pl
 from pypmsi.utils import *
 import re
+from pypmsi.mco.rum_particuliers import rum_particuliers
 
-# fonction de lecture des RSA entre 2016 et 2022
+
+
+# fonction de lecture des RSA entre 2012 et 2022 hormis 2015
+
 def irum(
     finess, annee: int, mois: int, path: str, typi: int = 3, tdiag: bool = True
 ) -> dict:
@@ -38,7 +42,22 @@ def irum(
     )
     df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
 
-    df = parse_pmsi_fwf(df, "mco", "rum", annee)
+    df = parse_pmsi_fwf(df, "mco", "rum", str(annee))
+    
+
+    # calcul sur les dates (difftime)
+    df = df.with_columns(
+        (pl.col("d8soue") - pl.col("d8eeue")).dt.days().alias("dureesejpart")
+    )
+
+    if typi == 1:
+    # retourne la partie fixe uniquement
+        rum = {"rum": df.drop(["zad"]).drop(list(filter(re.compile('^fil').match, df.columns)))}
+        return rum
+
+    if (annee in [2015]):
+        return rum_particuliers(df, annee, typi, tdiag)
+
 
     patterns_rum = get_patterns(str(annee), "rum")
     zac_pat = patterns_rum.filter(pl.col("z") == "zac")["rg"][0]
@@ -53,15 +72,7 @@ def irum(
     zal_pat = patterns_rum.filter(pl.col("z") == "zal")["rg"][0]
     zal_cur = patterns_rum.filter(pl.col("z") == "zal")["curseur"][0]
 
-    # calcul sur les dates (difftime)
-    df = df.with_columns(
-        (pl.col("d8soue") - pl.col("d8eeue")).dt.days().alias("dureesejpart")
-    )
 
-    if typi == 1:
-        # retourne la partie fixe uniquement
-        rum = {"rum": df.drop(["zad"]).drop(list(filter(re.compile('^fil').match, df.columns)))}
-        return rum
 
     # Définition des curseurs zones variables
     df = df.with_columns(pl.lit(0).alias("ldas_s"))
@@ -157,7 +168,7 @@ def irum(
     if typi == 2:
         # retourne partie fixe + stream
         rum = {
-            "rum": df.drop(["zad", "zactes", "zdas", "zdad", "ACTES"].drop(list(filter(re.compile('^fil').match, df.columns))))
+            "rum": df.drop(["zad", "zactes", "zdas", "zdad", "ACTES"]).drop(list(filter(re.compile('^fil').match, df.columns)))
         }
         return rum
 
@@ -174,7 +185,7 @@ def irum(
         .collect()
     )
 
-    actes = parse_pmsi_fwf(actes, "mco", "rum_actes", annee)
+    actes = parse_pmsi_fwf(actes, "mco", "rum_actes", str(annee))
 
     # consolider (explode) la zone das
     das = (
@@ -252,3 +263,4 @@ def irum(
         rum = {"rum": df, "actes": actes, "diags": rum_diags}
 
     return rum
+
