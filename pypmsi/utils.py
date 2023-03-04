@@ -1,5 +1,18 @@
 import polars as pl
 import re
+import os
+
+
+def get_formats_path() -> str:
+    """Récupère le chemin du fichier pmeasyr_formats.json"""
+
+    folder = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(folder, "formats", "pmeasyr_formats.json")
+    return path
+
+
+PMEASYR_FORMATS_FILE = get_formats_path()
+
 
 def parse_dates(df: pl.DataFrame, patterns: str = "(dt|dat|d8).*") -> pl.DataFrame:
     """Mettre les dates au format %d%m%Y au format date
@@ -85,7 +98,7 @@ def get_formats(annee: str, champ: str, table: str) -> pl.DataFrame:
     Returned:
         pl.DataFrame: Formats PMSI ministériels
     """
-    formats = pl.read_json("pypmsi/formats/pmeasyr_formats.json")
+    formats = pl.read_json(PMEASYR_FORMATS_FILE)
     formats_temp = (
         formats.filter(pl.col("champ") == champ)
         .filter(pl.col("table") == table)
@@ -116,7 +129,7 @@ def get_patterns(annee4: str, table: str) -> pl.DataFrame:
     Returns:
         pl.DataFrame: Pattern regex et curseurs
     """
-    formats = pl.read_json("pypmsi/formats/pmeasyr_formats.json")
+    formats = pl.read_json(PMEASYR_FORMATS_FILE)
     formats_temp = formats.filter(pl.col("table") == table).filter(
         pl.col("an").str.slice(0,4) == annee4
     )
