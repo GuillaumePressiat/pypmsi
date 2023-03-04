@@ -34,7 +34,7 @@ def parse_integers(df: pl.DataFrame, columns_l: list) -> pl.DataFrame:
     """
 
     df = df.with_columns(
-        [pl.col(i).cast(pl.Int64, strict=False).alias(i) for i in columns_l]
+        [pl.col(i).cast(pl.Int32, strict=False).alias(i) for i in columns_l]
     )
     return df
 
@@ -50,7 +50,7 @@ def parse_integers_regex(df: pl.DataFrame, patterns: str) -> pl.DataFrame:
     """
     re_dt = re.compile(patterns)
     df = df.with_columns(
-        [pl.col(i).cast(pl.Int64, strict=False).alias(i) for i in list(filter(re_dt.match, df.columns))]
+        [pl.col(i).cast(pl.Int32, strict=False).alias(i) for i in list(filter(re_dt.match, df.columns))]
     )
     return df
 
@@ -69,16 +69,16 @@ def parse_numerics(df: pl.DataFrame, patterns: str, digits = 2) -> pl.DataFrame:
     re_dt = re.compile(patterns)
     
     df = df.with_columns(
-        [(pl.col(i).cast(pl.Int64, strict=False) / 10**digits).alias(i) for i in list(filter(re_dt.match, df.columns))]
+        [(pl.col(i).cast(pl.Int32, strict=False) / 10**digits).alias(i) for i in list(filter(re_dt.match, df.columns))]
     )
     return df
 
 # Charger les formats pmeasyr (formats ministériels)
-def get_formats(annee: int, champ: str, table: str) -> pl.DataFrame:
+def get_formats(annee: str, champ: str, table: str) -> pl.DataFrame:
     """Charger les formats PMSI ministériels pour une année, une table d'un champ
 
     Args:
-        annee (int): Année de la période PMSI (2 digits)
+        annee (str): Année de la période PMSI (2 digits)
         champ (str): Champ PMSI (mco, ssr, psy, had)
         table (str): Table considérée (exemple: rsa, rss, rsa_ano, rsa_actes, rsa_um)
 
@@ -94,7 +94,7 @@ def get_formats(annee: int, champ: str, table: str) -> pl.DataFrame:
         .with_columns(pl.col("longueur").cast(pl.Int32).alias("longueur"))
     )
 
-    if (annee > "12") & (annee < "20") & (champ == "mco") & (table == "rsa_um"):
+    if ((annee > "12") & (annee < "20") & (champ == "mco") & (table == "rsa_um")):
         formats_temp = formats_temp.with_columns(
             pl.when(pl.col("nom") == "nseqrum")
             .then(pl.lit(5))
@@ -106,7 +106,7 @@ def get_formats(annee: int, champ: str, table: str) -> pl.DataFrame:
 
 
 # Charger les formats pmeasyr (expressions régulières et curseurs)
-def get_patterns(annee4: int, table: str) -> pl.DataFrame:
+def get_patterns(annee4: str, table: str) -> pl.DataFrame:
     """Charger les patterns des zones variables
 
     Args:
@@ -118,14 +118,13 @@ def get_patterns(annee4: int, table: str) -> pl.DataFrame:
     """
     formats = pl.read_json("pypmsi/formats/pmeasyr_formats.json")
     formats_temp = formats.filter(pl.col("table") == table).filter(
-        pl.col("an") == annee4
+        pl.col("an").str.slice(0,4) == annee4
     )
     return formats_temp
 
 
 def parse_pmsi_fwf(
-    df: pl.DataFrame, champ: str, table: str, annee: int
-) -> pl.DataFrame:
+    df: pl.DataFrame, champ: str, table: str, annee: str) -> pl.DataFrame:
     """Découpage d'un fichier partie fixe préalablement chargé dans un pl.DataFrame (colonne l)
 
     Args:
@@ -137,7 +136,11 @@ def parse_pmsi_fwf(
     Returns:
         pl.DataFrame: Dataframe découpé
     """
-    formats = get_formats(str(annee)[2:4], champ, table)
+    
+
+    formats = get_formats(str(annee)[2:], champ, table)
+    #return formats
+
     column_names = formats["nom"].to_list()
     widths = (
         formats.filter(~pl.col("longueur").is_null())["longueur"].to_list()
