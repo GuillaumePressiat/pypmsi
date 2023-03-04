@@ -18,4 +18,6 @@ from pypmsi.mco.iano_mco import iano_mco
 from pypmsi.mco.irsfa import irsfa
 from pypmsi.mco.irsf import irsf
 
+from pypmsi.archives import adezip
+
 
