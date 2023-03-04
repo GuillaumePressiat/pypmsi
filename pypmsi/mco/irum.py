@@ -6,7 +6,7 @@ from pypmsi.mco.rum_particuliers import rum_particuliers
 
 
 
-# fonction de lecture des RSA entre 2012 et 2022 hormis 2015
+# fonction de lecture des RSA entre 2012 et 2023
 
 def irum(
     finess, annee: int, mois: int, path: str, typi: int = 3, tdiag: bool = True
@@ -25,7 +25,7 @@ def irum(
         dict: Dictionnaire contenant des dataframe
     """
 
-    # ok entre 2012 et 2023 sauf 2015 pour le moment
+    # ok entre 2012 et 2023 
 
     # 4 types d'imports (typi)
     # # 1          : partie fixe uniquement
