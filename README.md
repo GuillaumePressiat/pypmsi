@@ -17,23 +17,24 @@ avec pip
 pip install https://github.com/GuillaumePressiat/pypmsi/releases/latest/download/pypmsi-0.1.0-py3-none-any.whl
 ```
 
-## Exemple
 
+## Utilisation
 
 ```python
 import polars
 import pypmsi as pm
 ```
 
+### 3 manières de lire un fichier
 
-Spécifier les paramètres dans la fonction
+##### Spécifier les paramètres dans la fonction
 
 ```python
 rsa = pm.irsa(290000017, 2021,5, '~/Documents/data/mco', typi = 4)
 rsa
 ```
 
-ou bien, définir un noyau de paramètres
+##### Définir un noyau de paramètres
 
 ```python
 p = pm.noyau_pmsi(finess = 290000017, annee = 2021, mois = 5, path = '~/Documents/data/mco')
@@ -41,14 +42,16 @@ rsa = p.irsa()
 rsa
 ```
 
-ou bien, indiquer le chemin du fichier et l'année, et le lire
+##### indiquer le chemin du fichier et l'année, et le lire
 
 ```python
 mon_rsa = pm.chemin_pmsi(filepath = '~/Documents/data/mco/290000017.2021.5.rsa', annee = 2021)
 rsa = mon_rsa.read_rsa()
 rsa
 ```
+
 (du coup le nom du fichier peut-être formaté différement).
+
 
 On peut modifier en ligne les paramètres, exemple :
 
@@ -59,6 +62,12 @@ rsa = p.irsa(annee = 2022)
 rsa
 ```
 
+
+### Exemple d'affichage 
+
+```python
+rsa
+```
 
 
 ```
@@ -130,6 +139,9 @@ rsa
 │ 00000xxxxx ┆ 05      ┆ 0085   ┆ 29000xxxx ┆ ... ┆ 0       ┆         ┆          ┆         │
 └────────────┴─────────┴────────┴───────────┴─────┴─────────┴─────────┴──────────┴─────────┘}
 ```
+
+
+### Quelques statistiques avec polars
 
 
 ```python
