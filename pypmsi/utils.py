@@ -252,14 +252,32 @@ def polars_to_pandas(df_d):
     elif (type(df_d) == dict):
         return {k: polars_to_pandas(v) for k, v in df_d.items()}
 
-def noyau_pmsi(finess, annee : int, mois : int, path : str, **kwargs):
+# def noyau_pmsi(finess, annee : int, mois : int, path : str, **kwargs):
+# 
+#     noyau = {'finess' : finess, 'annee' : annee, 'mois' : mois, 'path' : path}
+#     for k,v in kwargs.items():
+#         noyau[k] = v
+#     return noyau
 
-    noyau = {'finess' : finess, 'annee' : annee, 'mois' : mois, 'path' : path}
-    for k,v in kwargs.items():
-        noyau[k] = v
-    return noyau
+# def fichier_pmsi(p : dict, extension = "rsa"):
+#     f = str(p['finess']) + "." + str(p['annee']) + "." + str(p['mois']) + "." + extension
+#     return f
 
-def fichier_pmsi(p : dict, extension = "rsa"):
-    f = str(p['finess']) + "." + str(p['annee']) + "." + str(p['mois']) + "." + extension
-    return f
+# def map_arguments(arguments):
+#     
+#     d = arguments.items()
+#     # for key, value in d:
+#     #     print(f"{key}: {value}")
+#     
+#     if ('filepath' in arguments):
+#         arguments['situation'] = 'fichier'
+# 
+#     if (('finess' in arguments) & 
+#         ('annee' in arguments) &
+#         ('mois' in arguments) & 
+#         ('path' in arguments)):
+#         arguments['situation'] = 'noyau_pmsi'
+#         arguments['filepath'] = arguments['path'] + '/' + str(arguments['finess']) + "." + str(arguments['annee']) + "." + str(arguments['mois']) + "." 
+# 
+#     return arguments
 

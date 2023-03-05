@@ -3,6 +3,12 @@
 import polars as pl
 import re
 
+
+from pypmsi.utils import get_formats
+
+from pypmsi.noyau_pmsi import noyau_pmsi
+from pypmsi.noyau_pmsi import chemin_pmsi
+
 from pypmsi.utils import get_formats
 from pypmsi.utils import get_patterns
 from pypmsi.utils import parse_pmsi_fwf

@@ -3,12 +3,15 @@ import polars as pl
 from pypmsi.utils import *
 
 
-def irsfa(finess, annee : int, mois : int, path : str):
+def irsfa(finess, annee : int, mois : int, path : str, filepath = ""):
 
     
-    file_in = (
-        path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rsfa"
-    )
+    if filepath != "":
+        file_in = filepath
+    else:
+        file_in = (
+            path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rsfa"
+        )
     
     df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
     
