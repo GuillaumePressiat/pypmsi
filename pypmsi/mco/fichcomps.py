@@ -2,7 +2,7 @@ import polars as pl
 from pypmsi.utils import *
 
 
-def imed_mco(finess, annee : int, mois : int, path : str, typmed : str = "in", filepath = "") -> pl.DataFrame:
+def imed_mco(finess, annee : int, mois : int, path : str, typmed : str = "in", filepath = "", n_rows = None) -> pl.DataFrame:
     """Découper le fichier med du in ou du out
     
     Args:
@@ -30,7 +30,7 @@ def imed_mco(finess, annee : int, mois : int, path : str, typmed : str = "in", f
                 + "."
                 + "med.txt"
             )
-        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rum_med", annee)
     else:
         if filepath != "":
@@ -39,7 +39,7 @@ def imed_mco(finess, annee : int, mois : int, path : str, typmed : str = "in", f
             file_in = (
                 path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "med*"
             )
-        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rsa_med", annee)
 
     df = (
@@ -56,7 +56,7 @@ def imed_mco(finess, annee : int, mois : int, path : str, typmed : str = "in", f
     return df
 
 
-def idmi_mco(finess, annee : int, mois : int, path : str, typdmi : str = "in", filepath = "") -> pl.DataFrame:
+def idmi_mco(finess, annee : int, mois : int, path : str, typdmi : str = "in", filepath = "", n_rows = None) -> pl.DataFrame:
     """Découper le fichier dmi du in ou du out
     
     Args:
@@ -84,7 +84,7 @@ def idmi_mco(finess, annee : int, mois : int, path : str, typdmi : str = "in", f
                 + "."
                 + "dmi.txt"
             )
-        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rum_dmi", annee)
     else:
         if filepath != "":
@@ -93,7 +93,7 @@ def idmi_mco(finess, annee : int, mois : int, path : str, typdmi : str = "in", f
             file_in = (
                 path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "dmip"
             )
-        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rsa_dmi", annee)
 
     df = (

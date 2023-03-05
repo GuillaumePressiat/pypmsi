@@ -9,7 +9,7 @@ from pypmsi.mco.rum_particuliers import rum_particuliers
 # fonction de lecture des RSA entre 2012 et 2023
 
 def irum(
-    finess, annee: int, mois: int, path: str, typi: int = 3, tdiag: bool = True, filepath = ""
+    finess, annee: int, mois: int, path: str, typi: int = 3, tdiag: bool = True, filepath = "", n_rows = None
 ) -> dict:
     """Découpage des RUM / RSS au format ministériel
 
@@ -44,7 +44,7 @@ def irum(
             path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rss.txt"
         )
         
-    df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
+    df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
 
     df = parse_pmsi_fwf(df, "mco", "rum", str(annee))
     

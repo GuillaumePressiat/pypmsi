@@ -2,7 +2,7 @@
 import polars as pl
 from pypmsi.utils import *
 
-def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bool = True, filepath = "") -> dict:
+def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bool = True, filepath = "", n_rows = None) -> dict:
     """Découpage des RSA ; 2011 à 2023
     
     Args:
@@ -38,7 +38,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
             path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rsa"
         )
 
-    df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
+    df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
 
     df = parse_pmsi_fwf(df, "mco", "rsa", annee)
 

@@ -3,7 +3,7 @@ import polars as pl
 from pypmsi.utils import *
 
 
-def irsfa(finess, annee : int, mois : int, path : str, filepath = ""):
+def irsfa(finess, annee : int, mois : int, path : str, filepath = "", n_rows = None):
 
     
     if filepath != "":
@@ -13,7 +13,7 @@ def irsfa(finess, annee : int, mois : int, path : str, filepath = ""):
             path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rsfa"
         )
     
-    df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
+    df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
     
     rsf = dict()
 

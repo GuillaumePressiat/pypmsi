@@ -1,7 +1,7 @@
 import polars as pl
 from pypmsi.utils import *
 
-def iano_mco(finess, annee : int, mois : int, path : str, typano :str ="in", filepath = "") -> pl.DataFrame:
+def iano_mco(finess, annee : int, mois : int, path : str, typano :str ="in", filepath = "", n_rows = None) -> pl.DataFrame:
     """Découper le ano in ou out du mco
     
     Args:
@@ -29,7 +29,7 @@ def iano_mco(finess, annee : int, mois : int, path : str, typano :str ="in", fil
                 + "."
                 + "ano.txt"
             )
-        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rum_ano", annee)
     else:
         if filepath != "":
@@ -38,7 +38,7 @@ def iano_mco(finess, annee : int, mois : int, path : str, typano :str ="in", fil
             file_in = (
                 path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "ano"
             )
-        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"])
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rsa_ano", annee)
 
     return df
