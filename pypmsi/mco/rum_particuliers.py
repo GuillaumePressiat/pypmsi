@@ -138,7 +138,7 @@ def rum_particuliers(df, annee, typi, tdiag):
 
 
     actes = pl.concat([parse_pmsi_fwf(actes.filter(pl.col('noverg') == vers[0]),  "mco", "rum_actes", str(annee) + "_" + vers[0]),
-                       parse_pmsi_fwf(actes.filter(pl.col('noverg') == vers[1]), "mco", "rum_actes", str(annee) + "_" + vers[1])])
+                       parse_pmsi_fwf(actes.filter(pl.col('noverg') == vers[1]), "mco", "rum_actes", str(annee) + "_" + vers[1])]).drop('noverg')
 
 
 
