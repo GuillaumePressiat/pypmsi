@@ -1,0 +1,5 @@
+site_name: pypmsi
+
+theme:
+  name: material
+
