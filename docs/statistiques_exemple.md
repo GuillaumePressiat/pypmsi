@@ -1,69 +1,8 @@
-# pypmsi
-
-Lire les fichiers du PMSI avec python / pola.rs
+# Exemple de statistiques
 
 
-## Installation
 
-
-```sh
-git clone https://github.com/GuillaumePressiat/pypmsi.git
-poetry install
-```
-
-avec pip
-
-```sh
-pip install https://github.com/GuillaumePressiat/pypmsi/releases/latest/download/pypmsi-0.1.3-py3-none-any.whl
-```
-
-
-## Utilisation
-
-```python
-import polars
-import pypmsi as pm
-```
-
-### 3 manières de lire un fichier
-
-##### Spécifier les paramètres dans la fonction
-
-```python
-rsa = pm.irsa(290000017, 2021,5, '~/Documents/data/mco', typi = 4)
-rsa
-```
-
-##### Définir un noyau de paramètres
-
-```python
-p = pm.noyau_pmsi(finess = 290000017, annee = 2021, mois = 5, path = '~/Documents/data/mco')
-rsa = p.irsa()
-rsa
-```
-
-##### indiquer le chemin du fichier et l'année, et le lire
-
-```python
-mon_rsa = pm.chemin_pmsi(filepath = '~/Documents/data/mco/290000017.2021.5.rsa', annee = 2021)
-rsa = mon_rsa.read_rsa()
-rsa
-```
-
-(du coup le nom du fichier peut-être formaté différement).
-
-
-On peut modifier en ligne les paramètres, exemple :
-
-```python
-p = pm.noyau_pmsi(finess = 290000017, annee = 2021, mois = 12, path = '~/Documents/data/mco')
-# lire les données 2022
-rsa = p.irsa(annee = 2022)
-rsa
-```
-
-
-### Exemple d'affichage 
+## Exemple sur les RSA
 
 ```python
 rsa
@@ -72,21 +11,21 @@ rsa
 
 ```
 {'rsa': shape: (57140, 88)
-┌───────────┬────────┬────────────┬────────┬─────┬───────┬──────┬─────┬─────────┐
-│ nofiness  ┆ novrsa ┆ cle_rsa    ┆ novrss ┆ ... ┆ dr    ┆ ndas ┆ na  ┆ filler6 │
-│ ---       ┆ ---    ┆ ---        ┆ ---    ┆     ┆ ---   ┆ ---  ┆ --- ┆ ---     │
-│ str       ┆ str    ┆ str        ┆ str    ┆     ┆ str   ┆ i32  ┆ i32 ┆ str     │
-╞═══════════╪════════╪════════════╪════════╪═════╪═══════╪══════╪═════╪═════════╡
-│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ R5210 ┆ 0    ┆ 0   ┆         │
-│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ G628  ┆ 0    ┆ 0   ┆         │
-│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ M341  ┆ 0    ┆ 5   ┆         │
-│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆       ┆ 16   ┆ 27  ┆         │
-│ ...       ┆ ...    ┆ ...        ┆ ...    ┆ ... ┆ ...   ┆ ...  ┆ ... ┆ ...     │
-│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆       ┆ 0    ┆ 4   ┆         │
-│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ N185  ┆ 0    ┆ 1   ┆         │
-│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ C504  ┆ 0    ┆ 1   ┆         │
-│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆       ┆ 6    ┆ 25  ┆         │
-└───────────┴────────┴────────────┴────────┴─────┴───────┴──────┴─────┴─────────┘, 
+┌───────────┬────────┬────────────┬────────┬─────┬───────┬──────┬─────┐
+│ nofiness  ┆ novrsa ┆ cle_rsa    ┆ novrss ┆ ... ┆ dr    ┆ ndas ┆ na  │
+│ ---       ┆ ---    ┆ ---        ┆ ---    ┆     ┆ ---   ┆ ---  ┆ --- │
+│ str       ┆ str    ┆ str        ┆ str    ┆     ┆ str   ┆ i32  ┆ i32 │
+╞═══════════╪════════╪════════════╪════════╪═════╪═══════╪══════╪═════╡
+│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ R5210 ┆ 0    ┆ 0   │
+│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ G628  ┆ 0    ┆ 0   │
+│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ M341  ┆ 0    ┆ 5   │
+│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆       ┆ 16   ┆ 27  │
+│ ...       ┆ ...    ┆ ...        ┆ ...    ┆ ... ┆ ...   ┆ ...  ┆ ... │
+│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆       ┆ 0    ┆ 4   │
+│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ N185  ┆ 0    ┆ 1   │
+│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆ C504  ┆ 0    ┆ 1   │
+│ 290000017 ┆ 226    ┆ 00000xxxxx ┆ 120    ┆ ... ┆       ┆ 6    ┆ 25  │
+└───────────┴────────┴────────────┴────────┴─────┴───────┴──────┴─────┘, 
 
 'actes': shape: (166028, 13)
 ┌────────────┬───────┬─────────┬────────┬─────┬────────┬────────┬────────┬─────────┐
@@ -141,14 +80,14 @@ rsa
 ```
 
 
-### Quelques statistiques avec polars
+## Quelques statistiques avec polars
 
 
 ```python
 (rsa['actes']
-	.filter(pl.col('cdccam').str.contains('EBLA'))
-	.groupby(['cdccam', 'nbexec'])
-	.count()
+    .filter(pl.col('cdccam').str.contains('EBLA'))
+    .groupby(['cdccam', 'nbexec'])
+    .count()
 )
 ```
 
@@ -166,10 +105,10 @@ shape: (2, 3)
 
 ```python
 (rsa['actes']
-	.filter(pl.col('cdccam').str.contains('EBLA'))
-	.join(rsa['rsa'], on = 'cle_rsa', how = 'inner')
-	.pivot('nbexec', 'cdccam', 'rsatype', 'count')
-	.fill_null(0)
+    .filter(pl.col('cdccam').str.contains('EBLA'))
+    .join(rsa['rsa'], on = 'cle_rsa', how = 'inner')
+    .pivot('nbexec', 'cdccam', 'rsatype', 'count')
+    .fill_null(0)
 )
 ```
 
@@ -187,10 +126,10 @@ shape: (2, 5)
 
 ```python
 (rsa['actes']
-	.filter(pl.col('cdccam').str.contains('EBLA'))
-	.join(rsa['rsa'], on = 'cle_rsa', how = 'inner')
-	.pivot('nbexec', 'cdccam', ['rsacmd', 'rsatype'], 'sum')
-	.fill_null(0)
+    .filter(pl.col('cdccam').str.contains('EBLA'))
+    .join(rsa['rsa'], on = 'cle_rsa', how = 'inner')
+    .pivot('nbexec', 'cdccam', ['rsacmd', 'rsatype'], 'sum')
+    .fill_null(0)
 )
 ```
 
