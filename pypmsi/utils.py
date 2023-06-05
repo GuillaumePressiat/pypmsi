@@ -4,10 +4,10 @@ import os
 
 
 def get_formats_path() -> str:
-    """Récupère le chemin du fichier pmeasyr_formats.json"""
+    """Récupère le chemin du fichier pmeasyr_formats.parquet"""
 
     folder = os.path.dirname(os.path.abspath(__file__))
-    path = os.path.join(folder, "formats", "pmeasyr_formats.json")
+    path = os.path.join(folder, "formats", "pmeasyr_formats.parquet")
     return path
 
 
@@ -98,7 +98,8 @@ def get_formats(annee: str, champ: str, table: str) -> pl.DataFrame:
     Returned:
         pl.DataFrame: Formats PMSI ministériels
     """
-    formats = pl.read_json(PMEASYR_FORMATS_FILE)
+    #formats = pl.read_json(PMEASYR_FORMATS_FILE)
+    formats = pl.read_parquet(PMEASYR_FORMATS_FILE)
     
 
     formats_temp = (
@@ -137,7 +138,9 @@ def get_patterns(annee4: str, table: str) -> pl.DataFrame:
     Returns:
         pl.DataFrame: Pattern regex et curseurs
     """
-    formats = pl.read_json(PMEASYR_FORMATS_FILE)
+    #formats = pl.read_json(PMEASYR_FORMATS_FILE)
+    formats = pl.read_parquet(PMEASYR_FORMATS_FILE)
+
     formats_temp = formats.filter(pl.col("table") == table).filter(
         pl.col("an").str.slice(0,4) == annee4
     )
