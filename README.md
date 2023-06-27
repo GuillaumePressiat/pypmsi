@@ -30,7 +30,7 @@ import pypmsi as pm
 ##### Spécifier les paramètres dans la fonction
 
 ```python
-rsa = pm.irsa(290000017, 2021,5, '~/Documents/data/mco', typi = 4)
+rsa = pm.irsa(290000017, 2021, 5, '~/Documents/data/mco', typi = 4)
 rsa
 ```
 
