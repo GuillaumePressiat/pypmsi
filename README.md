@@ -2,7 +2,7 @@
 
 Lire les fichiers du PMSI avec python / pola.rs
 
-[![logotest][https://img.shields.io/badge/polars-pypmsi-blue)]()
+[![logotest](https://img.shields.io/badge/polars-pypmsi-blue)]()
 
 
 ## Installation
