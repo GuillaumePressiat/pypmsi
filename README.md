@@ -8,11 +8,11 @@ Lire les fichiers du PMSI avec python / pola.rs
 
 #### avec puce silicon
 
-[![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rsa-<200ms-firebrick)]()  [![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rss-<100ms-firebrick)]()  [![logotest](https://img.shields.io/badge/40&nbsp;000&nbsp;000&nbsp;rsf-~1min-firebrick)]()
+[![](https://img.shields.io/badge/100&nbsp;000&nbsp;rsa-~700ms-firebrick)]()  [![](https://img.shields.io/badge/100&nbsp;000&nbsp;rss-~500ms-firebrick)]()  [![](https://img.shields.io/badge/10&nbsp;000&nbsp;000&nbsp;rsf-~7sec-firebrick)]()
 
 #### avec puce "classique"
 
-[![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rsa-<3sec-firebrick)]()  [![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rss-<2sec-firebrick)]()
+[![](https://img.shields.io/badge/100&nbsp;000&nbsp;rsa-~3sec-firebrick)]()  [![](https://img.shields.io/badge/100&nbsp;000&nbsp;rss-~2sec-firebrick)]()
 
 
 ## Installation
