@@ -12,7 +12,7 @@ Lire les fichiers du PMSI avec python / pola.rs
 
 #### avec puce "classique"
 
-[![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rsa-<3sec-firebrick)]()  [![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rss-<2sec-firebrick)]()  [![logotest](
+[![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rsa-<3sec-firebrick)]()  [![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rss-<2sec-firebrick)]()
 
 
 ## Installation
