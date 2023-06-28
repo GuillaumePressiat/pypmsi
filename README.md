@@ -8,7 +8,7 @@ Lire les fichiers du PMSI avec python / pola.rs
 
 #### avec puce silicon
 
-[![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rsa-<200ms-firebrick)]()  [![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rss-<100ms-firebrick)]()  [![logotest](https://img.shields.io/badge/40&nbsp;000&nbsp;000&nbsp;rsf-1min-firebrick)]()
+[![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rsa-<200ms-firebrick)]()  [![logotest](https://img.shields.io/badge/100&nbsp;000&nbsp;rss-<100ms-firebrick)]()  [![logotest](https://img.shields.io/badge/40&nbsp;000&nbsp;000&nbsp;rsf-~1min-firebrick)]()
 
 #### avec puce "classique"
 
