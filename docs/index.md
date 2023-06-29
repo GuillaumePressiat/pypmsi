@@ -17,7 +17,7 @@ poetry install
 avec pip
 
 ```sh
-pip install https://github.com/GuillaumePressiat/pypmsi/releases/latest/download/pypmsi-0.1.0-py3-none-any.whl
+pip install https://github.com/GuillaumePressiat/pypmsi/releases/latest/download/pypmsi-0.1.6-py3-none-any.whl
 ```
 
 
@@ -32,7 +32,7 @@ Le [PMSI](https://fr.wikipedia.org/wiki/Programme_de_médicalisation_des_systèm
 
 Ces fichiers contiennent beaucoup de données qui sont utiles dans les hôpitaux pour :
 
-- décrire l'activité de l'hôpital tant sur un volet prise en charge (diagnostics : CIM-10 et autres, actes médicaux-techniques : CCAM, CSARR) que sur un volet médico-économique (GHM, GHS, GME, GMT), ce domaine est vaste
+- décrire l'activité de l'hôpital tant sur un volet prise en charge (diagnostics : CIM-10 et autres, actes médicaux/techniques : CCAM, CSARR) que sur un volet médico-économique (GHM, GHS, GME, GMT), ce domaine est vaste
 - analyser les parcours de soins des patients au sein d'un groupement hospitalier (entre différentes disciplines, champs d'activité MCO, SSR, Psy, HAD)
 - constituer un entrepôt de données PMSI figées dans le temps et décorrélées de la donnée de production à l'échelle d'un groupement hospitalier, que l'on peut utiliser comme bassin de données pour la recherche mais aussi pour alimenter un système d'information décisionnel
 
