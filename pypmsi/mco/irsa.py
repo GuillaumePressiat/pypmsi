@@ -166,6 +166,19 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
         )
 
     if typi in [3, 6]:
+        # on définit les curseurs pour les zones dpum, drum
+        curseurs_diag_um = (get_formats(str(annee)[2:],"mco", "rsa_um")
+                            .filter(pl.col('nom').str.contains('d(p|r)um'))
+                            .with_columns((pl.col('position') - 1).alias('diag_um_d'),
+                                          (pl.col('position') + 4).alias('diag_um_f'))
+                            .select('nom', 'diag_um_d', 'diag_um_f')
+                           )
+
+        sdpum = curseurs_diag_um.filter(pl.col('nom') == 'dpum').select('diag_um_d').to_series().to_list()[0]
+        edpum = curseurs_diag_um.filter(pl.col('nom') == 'dpum').select('diag_um_f').to_series().to_list()[0]
+        sdrum = curseurs_diag_um.filter(pl.col('nom') == 'drum').select('diag_um_d').to_series().to_list()[0]
+        edrum = curseurs_diag_um.filter(pl.col('nom') == 'drum').select('diag_um_f').to_series().to_list()[0]
+
         df = (
             df.lazy()
             .with_columns(
@@ -177,14 +190,14 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                     pl.col("UM")
                     .apply(
                         lambda x: str(
-                            ", ".join(set(x.apply(lambda y: y[slice(15, 20)].rstrip())))
+                            ", ".join(set(x.apply(lambda y: y[slice(sdpum, edpum)].rstrip())))
                         )
                     )
                     .alias("stream_dpum"),
                     pl.col("UM")
                     .apply(
                         lambda x: str(
-                            ", ".join(set(x.apply(lambda y: y[slice(21, 26)])))
+                            ", ".join(set(x.apply(lambda y: y[slice(sdrum, edrum)])))
                         )
                     )
                     .str.strip()
