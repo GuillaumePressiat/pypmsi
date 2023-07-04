@@ -4,8 +4,6 @@ import polars as pl
 import re
 
 
-from pypmsi.utils import get_formats
-
 from pypmsi.noyau_pmsi import noyau_pmsi
 from pypmsi.noyau_pmsi import chemin_pmsi
 
@@ -14,6 +12,7 @@ from pypmsi.utils import get_patterns
 from pypmsi.utils import parse_pmsi_fwf
 from pypmsi.utils import parse_dates
 from pypmsi.utils import parse_integers
+from pypmsi.utils import polars_to_pandas
 
 from pypmsi.mco.irsa import irsa
 from pypmsi.mco.irum import irum
