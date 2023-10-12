@@ -190,7 +190,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                     pl.col("UM")
                     .apply(
                         lambda x: str(
-                            ", ".join(set(x.apply(lambda y: y[slice(sdpum, edpum)].rstrip())))
+                            ", ".join(set(x.apply(lambda y: y[slice(sdpum, edpum)].strip_chars_end())))
                         )
                     )
                     .alias("stream_dpum"),
@@ -200,7 +200,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                             ", ".join(set(x.apply(lambda y: y[slice(sdrum, edrum)])))
                         )
                     )
-                    .str.strip()
+                    .str.strip_chars()
                     .alias("stream_drum"),
                 ]
             )
@@ -294,7 +294,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
         df.lazy()
         .select(["cle_rsa", "das"])
         .explode("das")
-        .with_columns(pl.col("das").str.strip())
+        .with_columns(pl.col("das").str.strip_chars())
         .filter(~pl.col("das").is_null())
         .collect()
     )

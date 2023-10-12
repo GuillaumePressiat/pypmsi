@@ -159,7 +159,7 @@ rsa
 ```python
 (rsa['actes']
 	.filter(pl.col('cdccam').str.contains('EBLA'))
-	.groupby(['cdccam', 'nbexec'])
+	.group_by(['cdccam', 'nbexec'])
 	.count()
 )
 ```

@@ -200,7 +200,7 @@ def irha(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
         df.lazy()
         .select(["noseqsej", "noseqrhs", "das"])
         .explode("das")
-        .with_columns(pl.col("das").str.strip())
+        .with_columns(pl.col("das").str.strip_chars())
         .filter(~pl.col("das").is_null())
         .collect()
     )

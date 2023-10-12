@@ -147,7 +147,7 @@ def rum_particuliers(df, annee, typi, tdiag):
         df.lazy()
         .select(["norss", "norum", "nas", "das"])
         .explode("das")
-        .with_columns(pl.col("das").str.strip())
+        .with_columns(pl.col("das").str.strip_chars())
         .filter(~pl.col("das").is_null())
         .collect()
     )
@@ -158,7 +158,7 @@ def rum_particuliers(df, annee, typi, tdiag):
         .select(["norss", "norum", "nas", "dad"])
         .explode("dad")
         .filter(~pl.col("dad").is_null())
-        .with_columns(pl.col("dad").str.strip())
+        .with_columns(pl.col("dad").str.strip_chars())
         .collect()
     )
 
