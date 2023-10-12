@@ -190,7 +190,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                     pl.col("UM")
                     .apply(
                         lambda x: str(
-                            ", ".join(set(x.apply(lambda y: y[slice(sdpum, edpum)].strip_chars_end())))
+                            ", ".join(set(x.apply(lambda y: y[slice(sdpum, edpum)].rstrip())))
                         )
                     )
                     .alias("stream_dpum"),
