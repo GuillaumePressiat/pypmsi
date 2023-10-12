@@ -28,7 +28,7 @@ def parse_dates(df: pl.DataFrame, patterns: str = "(dt|dat|d8).*") -> pl.DataFra
 
     df = df.with_columns(
         [
-            pl.col(i).str.strptime(pl.Date, fmt="%d%m%Y", strict=False).alias(i)
+            pl.col(i).str.strptime(pl.Date, format="%d%m%Y", strict=False).alias(i)
             for i in list(filter(re_dt.match, df.columns))
         ]
     )
@@ -185,7 +185,7 @@ def parse_pmsi_fwf(
           .lazy()
           .with_columns(
               [
-                  pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip().alias(col)
+                  pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip_chars().alias(col)
                   for slice_tuple, col in zip(slice_tuples, column_names)
               ]
           )
@@ -233,7 +233,7 @@ def parse_pmsi_trsf(
           .lazy()
           .with_columns(
               [
-                  pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip().alias(col)
+                  pl.col("l").str.slice(slice_tuple[0], slice_tuple[1]).str.strip_chars().alias(col)
                   for slice_tuple, col in zip(slice_tuples, column_names)
               ]
           )
