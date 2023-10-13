@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-polars = "^0.19"
+polars = "^0.19.3"
 
 
 [build-system]
