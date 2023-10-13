@@ -42,6 +42,13 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
 
     df = parse_pmsi_fwf(df, "mco", "rsa", annee)
 
+    # ghm
+    df = (df
+        .with_columns(
+            pl.concat_str(['rsacmd', 'rsatype', 'rsanum', 'rsacompx']).alias('ghm'),
+            pl.when(pl.col('moissor') < '03').then((pl.col('ansor').cast(pl.Int32)-1).cast(pl.Utf8)).otherwise(pl.col('ansor')).alias('anseqta'))
+        )
+
     patterns_rsa = get_patterns(str(annee), "rsa")
     zac_pat = patterns_rsa.filter(pl.col("z") == "zac")["rg"][0]
     zac_cur = patterns_rsa.filter(pl.col("z") == "zac")["curseur"][0]
@@ -227,7 +234,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                     "actes_s",
                     "actes_e",
                     "zaut",
-                    "zrdth",
+                    #"zrdth",
                     "zum",
                     "zdas",
                     "zactes",
@@ -324,7 +331,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
             "actes_s",
             "actes_e",
             "zaut",
-            "zrdth",
+            #"zrdth",
             "zum",
             "zdas",
             "zactes",
