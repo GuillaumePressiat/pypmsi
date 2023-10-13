@@ -3,7 +3,7 @@ import polars as pl
 import polars.selectors as cs
 from pypmsi.utils import *
 
-def vvr_rsa(rsa):
+def vvs_rsa(rsa):
 
     df = (rsa['rsa']
         .select(
@@ -47,14 +47,14 @@ def vvr_rsa(rsa):
             .unique('cle_rsa')
             .with_columns(pl.lit(1).alias('uhcd'))
         ),
-        on = 'cle_rsa'
+        on = 'cle_rsa', how = 'left'
     ).with_columns(pl.when(((pl.col('uhcd') == 1) & (pl.col('nbrum') == 1))).then(pl.lit(1)).otherwise(pl.lit(0)).alias('monorum_uhcd'))
 
 
     return df
 
 
-def vvr_rsa_hors_periode(vrsa, an_v, mois_v):
+def vvs_rsa_hors_periode(vrsa, an_v, mois_v):
 
     vrsa_ = (vrsa
         .with_columns(
@@ -66,9 +66,10 @@ def vvr_rsa_hors_periode(vrsa, an_v, mois_v):
             pl.when(pl.col('rsa_hors_periode')).then(pl.lit('90')).otherwise(pl.col('rsacmd')).alias('rsacmd')
         )
         )
+
     return vrsa_
 
-def vvr_ano_mco(ano):
+def vvs_ano_mco(ano):
 
     return ano
 

@@ -47,4 +47,9 @@ from pypmsi.had.fichcomps import imed_had
 
 from pypmsi.tra.itra import itra
 
+from pypmsi.mco.vvs.vvs_rsa import vvs_rsa
+from pypmsi.mco.vvs.vvs_rsa import vvs_rsa_hors_periode
+from pypmsi.mco.vvs.vvs_rsa import vvs_ano_mco
+
+from pypmsi.mco.vvs.vvs_ghs_supp import vvs_ghs_supp
 
