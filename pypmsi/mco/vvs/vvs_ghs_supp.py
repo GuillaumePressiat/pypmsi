@@ -52,9 +52,8 @@ def vvs_ghs_supp(
 
 
     if prudent is None:
-        rsa_2 = (
+        rsa = (
             rsa
-            .filter(pl.col('noghs').str.slice(0,1) != 'I')
             .with_columns(
                 pl.when(pl.col('anseqta') == '2023').then(0.993 * 1.0023)
                   .when(pl.col('anseqta') == '2022').then(0.993 * 1.0013)
@@ -70,8 +69,23 @@ def vvs_ghs_supp(
                   .when(pl.col('anseqta') == '2013').then(0.9965)
                   .otherwise(1).alias('cprudent')
                   )
-            .join(tarifs.unique(['ghs', 'anseqta']), left_on = ['anseqta', 'noghs'], right_on = ['anseqta', 'ghs'], how = 'left')
+            )
+    else:
+        rsa = (
+            rsa
             .with_columns(
+                pl.when(pl.col('anseqta') == '2023').then(cprudent * 1.0023)
+                  .when(pl.col('anseqta') == '2022').then(cprudent * 1.0013)
+                  .when(pl.col('anseqta') == '2021').then(cprudent * 1.0019)
+                  .otherwise(cprudent)
+                  )
+            )
+
+    rsa_2 = (
+        rsa
+        .filter(pl.col('noghs').str.slice(0,1) != 'I')
+        .join(tarifs.unique(['ghs', 'anseqta']), left_on = ['anseqta', 'noghs'], right_on = ['anseqta', 'ghs'], how = 'left')
+        .with_columns(
                 (pl.col('nbseance') * pl.col('tarif_base') * cgeo * pl.col('cprudent')).alias('t_base'),
                 (pl.col('nbjrbs') * pl.col('tarif_exh') * cgeo * pl.col('cprudent')).alias('t_haut'),
                 (
@@ -83,5 +97,23 @@ def vvs_ghs_supp(
                 .with_columns(pl.col('rec_bee').alias('rec_totale'))
             )
 
-    return rsa_2
+    rsa_innovation = (
+        rsa
+        .filter(pl.col('noghs').str.slice(0,1) == 'I')
+        .with_columns(
+            pl.when(pl.col('noghs') == 'I08').then(3119).otherwise(None).cast(pl.Float64).alias('t_base'))
+        .with_columns(
+            pl.col('t_base').alias('rec_bee'),
+            pl.col('t_base').alias('rec_totale'),
+            pl.lit(None, dtype = pl.Float64).alias('t_bas'),
+            pl.lit(None, dtype = pl.Float64).alias('t_haut')
+                )
+        )
+
+    rsa_valo = pl.concat([rsa_2, rsa_innovation], how = 'diagonal')
+
+
+
+
+    return rsa_valo
 
