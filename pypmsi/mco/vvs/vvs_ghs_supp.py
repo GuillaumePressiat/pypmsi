@@ -73,21 +73,21 @@ def vvs_ghs_supp(
     # Switch de GHS si molécule Yescarta ou Kymriah (car-T cells)
     cart_cells = (
         mo
-        .filter(pl.col('cducd').str.slice(5,12).is_in(['9439938', '9439921']))
+        .filter(pl.col('cducd').str.slice(5,7).is_in(['9439938', '9439921']))
         .unique('cle_rsa')
-        .with_columns(pl.lit(1).alias('swith_ghs'))
+        .with_columns(pl.lit(1).alias('switch_ghs'))
         )
 
     rsa = (
         rsa
         .join(cart_cells, on = 'cle_rsa', how = 'left')
         .with_columns(pl.when(
-            (pl.col('switch_ghs') is not None) & (((pl.col('anseqta') == '2017') & (pl.col('ansor') == '2018')) | (pl.col('anseqta') == '2018'))
+            (~pl.col('switch_ghs').is_null()) & (((pl.col('anseqta') == '2017') & (pl.col('ansor') == '2018')) | (pl.col('anseqta') == '2018'))
                 )
             .then(pl.col('noghs')).otherwise('')
         .alias('old_noghs'),
         pl.when(
-            (pl.col('switch_ghs') is not None) & (((pl.col('anseqta') == '2017') & (pl.col('ansor') == '2018')) | (pl.col('anseqta') == '2018'))
+            (~pl.col('switch_ghs').is_null()) & (((pl.col('anseqta') == '2017') & (pl.col('ansor') == '2018')) | (pl.col('anseqta') == '2018'))
                 ).then('8973').otherwise(pl.col('noghs'))
             .alias('noghs')
             )
@@ -118,10 +118,10 @@ def vvs_ghs_supp(
         rsa = (
             rsa
             .with_columns(
-                pl.when(pl.col('anseqta') == '2023').then(cprudent * 1.0023)
-                  .when(pl.col('anseqta') == '2022').then(cprudent * 1.0013)
-                  .when(pl.col('anseqta') == '2021').then(cprudent * 1.0019)
-                  .otherwise(cprudent)
+                pl.when(pl.col('anseqta') == '2023').then(prudent * 1.0023)
+                  .when(pl.col('anseqta') == '2022').then(prudent * 1.0013)
+                  .when(pl.col('anseqta') == '2021').then(prudent * 1.0019)
+                  .otherwise(prudent).alias('cprudent')
                   )
             )
 
@@ -167,5 +167,131 @@ def vvs_ghs_supp(
             )
 
 
+
+    # Info suppléments ghs radiothérapie
+    rdth = (
+        rsa.lazy()
+        .select('cle_rsa', 'zrdth', 'nb_rdth')
+        .with_columns(
+            [
+                pl.col('zrdth').str.extract_all('.{7}').alias("RDTH")
+            ]
+            )
+        .explode('RDTH')
+        .select(["cle_rsa", "RDTH"])
+        #.filter(~pl.col("RDTH").is_null())
+        .with_columns(
+            pl.col('RDTH').str.slice(0,4).alias('codsupra'),
+            pl.col('RDTH').str.slice(5,2).cast(pl.Int32).alias('nbsupra')
+            )
+        .drop('RDTH')
+        .with_columns(
+            pl.when(pl.col('codsupra') == '9610').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9610'),
+            pl.when(pl.col('codsupra') == '9619').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9619'),
+            pl.when(pl.col('codsupra') == '9620').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9620'),
+            pl.when(pl.col('codsupra') == '9621').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9621'),
+            pl.when(pl.col('codsupra') == '9622').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9622'),
+            pl.when(pl.col('codsupra') == '9625').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9625'),
+            pl.when(pl.col('codsupra') == '9631').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9631'),
+            pl.when(pl.col('codsupra') == '9632').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9632'),
+            pl.when(pl.col('codsupra') == '9633').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9633'),
+            pl.when(pl.col('codsupra') == '6523').then(pl.col('nbsupra')).otherwise(0).alias('nbacte6523'),
+            pl.when(pl.col('codsupra') == '9623').then(pl.col('nbsupra')).otherwise(0).alias('nbacte9623')
+            )
+        .drop('codsupra', 'nbsupra')
+        .group_by('cle_rsa')
+        .sum()
+        .collect()
+        )
+
+    rsa_valo = (rsa_valo
+        .join(rdth, on = 'cle_rsa', how = 'left')
+        )
+
+
+    # pie
+        # todo : import du fichcomp pie
+
+    # Import dip
+    dip = (
+        diap
+        .group_by('cle_rsa')
+        .agg(pl.col('nbsup').sum().alias('nbdip'))
+    )
+
+    # Importer po
+
+    if rsa_valo['anseqta'].unique().max() < '2017':
+        rsa_valo = (
+            rsa_valo
+            .with_columns(pl.lit('0').alias('suppdefcard'))
+            )
+
+    if rsa_valo['anseqta'].unique().max() < '2023':
+        rsa_valo = (
+            rsa_valo
+            .with_columns(pl.lit('0').alias('topctc'))
+            )
+
+    rsa_valo = (
+        rsa_valo
+        .join(dip, on = 'cle_rsa', how = 'left')
+        .join(supplements, on = 'anseqta', how = 'left')
+        .lazy()
+        # suppléments structures
+        .with_columns(
+            (pl.col('trep') * pl.col('nbsuprep') * pl.col('cprudent') * cgeo).alias('rec_rep'),
+            (pl.col('trea') * pl.col('nbsuprea') * pl.col('cprudent') * cgeo).alias('rec_rea'),
+            (pl.col('tsi')  * pl.col('nbsupstf') * pl.col('cprudent') * cgeo).alias('rec_stf'),
+            (pl.col('tsc')  * pl.col('nbsupsrc') * pl.col('cprudent') * cgeo).alias('rec_src'),
+            (pl.col('tnn1') * pl.col('nbsupnn1') * pl.col('cprudent') * cgeo).alias('rec_nn1'),
+            (pl.col('tnn2') * pl.col('nbsupnn2') * pl.col('cprudent') * cgeo).alias('rec_nn2'),
+            (pl.col('tnn3') * pl.col('nbsupnn3') * pl.col('cprudent') * cgeo).alias('rec_nn3')
+            )
+        # suppléments dialyse hors séances
+        .with_columns(
+            (pl.col('thhs')     * pl.col('nbsuphs')   * pl.col('cprudent')    * cgeo).alias('rec_hhs'),
+            (pl.col('tedpahs')  * pl.col('nbsupahs')  * pl.col('cprudent')    * cgeo).alias('rec_edpahs'),
+            (pl.col('tedpcahs') * pl.col('nbsupehs')  * pl.col('cprudent')    * cgeo).alias('rec_edpcahs'),
+            (pl.col('tehhs')    * pl.col('nbsupehs')  * pl.col('cprudent')    * cgeo).alias('rec_ehhs'),
+            (pl.col('tdip')     * pl.col('nbdip')     * pl.col('cprudent')    * cgeo).alias('rec_dip'))
+        .with_columns(
+            pl.sum_horizontal('rec_hhs', 'rec_edpahs', 'rec_edpcahs', 'rec_ehhs', 'rec_dip').alias('rec_dialhosp')
+            )
+        # autres suppléments
+        # supplements irradiation hors séances
+        # po
+        # rehosp
+        # suppléments pie
+        # ajout des pie aux supp structures classiques
+        .collect()
+        )
+
+    # calcul recette totale
+
     return rsa_valo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

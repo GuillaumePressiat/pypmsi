@@ -44,6 +44,7 @@ def vvs_rsa(rsa):
             rsa['rsa_um']
             .filter(pl.col('typaut1').str.slice(0,2) == '07')
             .filter(pl.col('nseqrum') == '01')
+            .select('cle_rsa')
             .unique('cle_rsa')
             .with_columns(pl.lit(1).alias('uhcd'))
         ),
