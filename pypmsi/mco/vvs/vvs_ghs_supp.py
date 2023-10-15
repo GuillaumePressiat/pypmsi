@@ -255,7 +255,6 @@ def vvs_ghs_supp(
         )
 
 
-    for i in range(po.shape[0]):
 
     if rsa_valo['anseqta'].unique().max() < '2017':
         rsa_valo = (
