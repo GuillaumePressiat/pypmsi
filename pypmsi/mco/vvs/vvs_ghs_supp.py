@@ -259,7 +259,28 @@ def vvs_ghs_supp(
             pl.sum_horizontal('rec_hhs', 'rec_edpahs', 'rec_edpcahs', 'rec_ehhs', 'rec_dip').alias('rec_dialhosp')
             )
         # autres suppléments
+        .with_columns(
+            (pl.col('tcaishyp')  * pl.col('nbsupcaisson') * pl.col('cprudent') * cgeo).alias('rec_caishyp'),
+            (pl.col('taph_9615') * pl.col('nbacte9615')   * pl.col('cprudent') * cgeo).alias('rec_aph'),
+            (pl.col('tant')      * pl.col('nbsupatpart')  * pl.col('cprudent') * cgeo).alias('rec_ant'),
+            (pl.col('trap')      * pl.col('nbsupreaped')  * pl.col('cprudent') * cgeo).alias('rec_rap'),
+            (pl.col('sdc')       * pl.when(pl.col('suppdefcard') == '1').then(1).otherwise(0) * pl.col('cprudent') * cgeo).alias('rec_sdc'),
+            (pl.col('ctc')       * pl.when(pl.col('topctc') == '1').then(1).otherwise(0)      * pl.col('cprudent') * cgeo).alias('rec_ctc')
+            )
         # supplements irradiation hors séances
+        .with_columns(
+            (pl.col('tcaishyp')  * pl.col('nbacte9610') * pl.col('cprudent') * cgeo).alias('rec_rdt5'),
+            (pl.col('tcaishyp')  * pl.col('nbacte9619') * pl.col('cprudent') * cgeo).alias('rec_prot'),
+            (pl.col('tcaishyp')  * pl.col('nbacte9620') * pl.col('cprudent') * cgeo).alias('rec_ict'),
+            (pl.col('tcaishyp')  * pl.col('nbacte9621') * pl.col('cprudent') * cgeo).alias('rec_cyb'),
+            (pl.col('tcaishyp')  * pl.col('nbacte6523') * pl.col('cprudent') * cgeo).alias('rec_gam'),
+            (pl.col('tcaishyp')  * pl.col('nbacte9622') * pl.col('cprudent') * cgeo).alias('rec_rcon1'),
+            (pl.col('tcaishyp')  * pl.col('nbacte9625') * pl.col('cprudent') * cgeo).alias('rec_rcon2'),
+            (pl.col('tcaishyp')  * pl.col('nbacte9631') * pl.col('cprudent') * cgeo).alias('rec_tciea'),
+            (pl.col('tcaishyp')  * pl.col('nbacte9632') * pl.col('cprudent') * cgeo).alias('rec_tcies'),
+            (pl.col('tcaishyp')  * pl.col('nbacte9633') * pl.col('cprudent') * cgeo).alias('rec_aie'),
+            (pl.col('tcaishyp')  * pl.col('nbacte9623') * pl.col('cprudent') * cgeo).alias('rec_rcon3')
+            )
         # po
         # rehosp
         # suppléments pie
