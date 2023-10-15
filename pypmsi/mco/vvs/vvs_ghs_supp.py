@@ -51,6 +51,50 @@ def vvs_ghs_supp(
         mo = pl.DataFrame({'cle_rsa': '', 'cducd' : ''})
 
 
+
+    # Correction GHS 5907 suite erreur dans tarifs atih entrainant une valo négative en cas de borne basse    
+    if "2018" in rsa['anseqta'].unique():
+        rsa = (
+            rsa
+            .with_columns(pl.when((pl.col('ghm') == '15M06A') & 
+                                  (pl.col('noghs') == '5907') & 
+                                  (pl.col('duree') == 0) & 
+                                  (pl.col('nbjrexb') == 30) &
+                                  (pl.col('anseqta') == '2018')).then(pl.col('nbjrexb') - 10).otherwise(pl.col('nbjrexb')))
+            .with_columns(pl.when((pl.col('ghm') == '15M06A') & 
+                                  (pl.col('noghs') == '5907') & 
+                                  (pl.col('duree') == 1) & 
+                                  (pl.col('monorum_uhcd') == 1) & 
+                                  (pl.col('nbjrexb') == 30) &
+                                  (pl.col('anseqta') == '2018')).then(pl.col('nbjrexb') - 10).otherwise(pl.col('nbjrexb')))
+            )
+
+
+    # Switch de GHS si molécule Yescarta ou Kymriah (car-T cells)
+    cart_cells = (
+        mo
+        .filter(pl.col('cducd').str.slice(5,12).is_in(['9439938', '9439921']))
+        .unique('cle_rsa')
+        .with_columns(pl.lit(1).alias('swith_ghs'))
+        )
+
+    rsa = (
+        rsa
+        .join(cart_cells, on = 'cle_rsa', how = 'left')
+        .with_columns(pl.when(
+            (pl.col('switch_ghs') is not None) & (((pl.col('anseqta') == '2017') & (pl.col('ansor') == '2018')) | (pl.col('anseqta') == '2018'))
+                )
+            .then(pl.col('noghs')).otherwise('')
+        .alias('old_noghs'),
+        pl.when(
+            (pl.col('switch_ghs') is not None) & (((pl.col('anseqta') == '2017') & (pl.col('ansor') == '2018')) | (pl.col('anseqta') == '2018'))
+                ).then('8973').otherwise(pl.col('noghs'))
+            .alias('noghs')
+            )
+        )
+
+    # Calcul des coefficients en fonction de l'année séquentielle des RSA 
+    # > on pourrait avantageusement le faire dans une table annexe avec une ligne par année
     if prudent is None:
         rsa = (
             rsa
@@ -97,6 +141,8 @@ def vvs_ghs_supp(
                 .with_columns(pl.col('rec_bee').alias('rec_totale'))
             )
 
+
+    # https://sante.gouv.fr/systeme-de-sante/innovation-et-recherche/forfait-innovation
     rsa_innovation = (
         rsa
         .filter(pl.col('noghs').str.slice(0,1) == 'I')
@@ -113,6 +159,12 @@ def vvs_ghs_supp(
     rsa_valo = pl.concat([rsa_2, rsa_innovation], how = 'diagonal')
 
 
+    if bee is True:
+        return (
+            rsa_valo
+            .select(['cle_rsa', 'nbseance', 'rec_totale', 't_base', 't_bas', 't_haut', 'rec_bee', 'ghm', 'noghs', 'anseqta', 'moissor'])
+            .rename({'t_bas' : 'rec_exb', 't_base' : 'rec_base', 't_haut' : 'rec_exh'})
+            )
 
 
     return rsa_valo
