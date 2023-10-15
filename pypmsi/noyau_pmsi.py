@@ -4,6 +4,7 @@ from pypmsi.mco.irum import irum
 from pypmsi.mco.iano_mco import iano_mco
 from pypmsi.mco.fichcomps import imed_mco
 from pypmsi.mco.fichcomps import idmi_mco
+from pypmsi.mco.fichcomps import idiap_mco
 from pypmsi.mco.irsf import irsf
 from pypmsi.mco.irsfa import irsfa
 
@@ -115,6 +116,10 @@ class noyau_pmsi:
         noyau.update_args(**kwargs)
         return irsfa(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, n_rows = n_rows)
 
+    def idiap_mco(self, typdiap = "out", n_rows = None, **kwargs):
+        noyau = copy.copy(self)
+        noyau.update_args(**kwargs)
+        return idiap_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typdiap = typdiap, n_rows = n_rows)
 
 
 
@@ -197,4 +202,8 @@ class chemin_pmsi:
         noyau.update_args(**kwargs)
         return irsfa(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, n_rows = n_rows)
 
+    def read_diap_mco(self, typdiap = "out", n_rows = None, **kwargs):
+        noyau = copy.copy(self)
+        noyau.update_args(**kwargs)
+        return imed_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typdiap = typdiap, n_rows = n_rows)
 

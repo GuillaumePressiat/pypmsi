@@ -18,6 +18,7 @@ from pypmsi.mco.irsa import irsa
 from pypmsi.mco.irum import irum
 from pypmsi.mco.fichcomps import imed_mco
 from pypmsi.mco.fichcomps import idmi_mco
+from pypmsi.mco.fichcomps import idiap_mco
 from pypmsi.mco.iano_mco import iano_mco
 
 from pypmsi.mco.irsfa import irsfa

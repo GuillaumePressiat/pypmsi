@@ -108,3 +108,47 @@ def idmi_mco(finess, annee : int, mois : int, path : str, typdmi : str = "in", f
     )
 
     return df
+
+
+def idiap_mco(finess, annee : int, mois : int, path : str, typdiap : str = "out", filepath = "", n_rows = None) -> pl.DataFrame:
+    """Découper le fichier diap du in ou du out
+    
+    Args:
+        finess (TYPE): Description
+        annee (int): Description
+        mois (int): Description
+        path (str): Description
+        typdiap (str, optional): Description
+    
+    Returns:
+        pl.DataFrame: Dataframe contenant les dialyses péritéonéales (fichcomp) du in ou du out
+    """
+    if typdiap == "in":
+        if filepath != "":
+            file_in = filepath
+        else:
+            file_in = (
+                path
+                + "/"
+                + str(finess)
+                + "."
+                + str(annee)
+                + "."
+                + str(mois)
+                + "."
+                + "diap.txt"
+            )
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
+        df = parse_pmsi_fwf(df, "mco", "ffc_in", annee)
+    else:
+        if filepath != "":
+            file_in = filepath
+        else:
+            file_in = (
+                path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "diap"
+            )
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
+        df = parse_pmsi_fwf(df, "mco", "rsa_diap", annee)
+
+
+    return df
