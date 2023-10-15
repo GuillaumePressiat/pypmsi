@@ -210,7 +210,17 @@ def vvs_ghs_supp(
 
 
     # pie
-        # todo : import du fichcomp pie
+    # todo : import du fichcomp pie
+    trans_pie = (
+        pie
+        .group_by('cle_rsa', 'code_pie')
+        .agg(pl.col('nbsuppie').sum().alias('nbsuppie'))
+        .join(pl.DataFrame({'liste_pie' : ['STF', 'SRC', 'REA', 'REP', 'NN1', 'NN2', 'NN3']}), left_on = 'code_pie', right_on = 'liste_pie', how = 'outer')
+        .with_columns(pl.col("nbsuppie").fill_null(strategy="zero"))
+        .with_columns(pl.concat_str([pl.lit('pie_'), 'code_pie']).str.to_lowercase().alias('code_pie'))
+        .pivot('nbsuppie', 'cle_rsa', 'code_pie')
+        .filter(~pl.col('cle_rsa').is_null())
+        )
 
     # Import dip
     dip = (
@@ -236,6 +246,7 @@ def vvs_ghs_supp(
     rsa_valo = (
         rsa_valo
         .join(dip, on = 'cle_rsa', how = 'left')
+        .join(trans_pie, on = 'cle_rsa', how = 'left')
         .join(supplements, on = 'anseqta', how = 'left')
         .lazy()
         # suppléments structures
@@ -269,22 +280,43 @@ def vvs_ghs_supp(
             )
         # supplements irradiation hors séances
         .with_columns(
-            (pl.col('tcaishyp')  * pl.col('nbacte9610') * pl.col('cprudent') * cgeo).alias('rec_rdt5'),
-            (pl.col('tcaishyp')  * pl.col('nbacte9619') * pl.col('cprudent') * cgeo).alias('rec_prot'),
-            (pl.col('tcaishyp')  * pl.col('nbacte9620') * pl.col('cprudent') * cgeo).alias('rec_ict'),
-            (pl.col('tcaishyp')  * pl.col('nbacte9621') * pl.col('cprudent') * cgeo).alias('rec_cyb'),
-            (pl.col('tcaishyp')  * pl.col('nbacte6523') * pl.col('cprudent') * cgeo).alias('rec_gam'),
-            (pl.col('tcaishyp')  * pl.col('nbacte9622') * pl.col('cprudent') * cgeo).alias('rec_rcon1'),
-            (pl.col('tcaishyp')  * pl.col('nbacte9625') * pl.col('cprudent') * cgeo).alias('rec_rcon2'),
-            (pl.col('tcaishyp')  * pl.col('nbacte9631') * pl.col('cprudent') * cgeo).alias('rec_tciea'),
-            (pl.col('tcaishyp')  * pl.col('nbacte9632') * pl.col('cprudent') * cgeo).alias('rec_tcies'),
-            (pl.col('tcaishyp')  * pl.col('nbacte9633') * pl.col('cprudent') * cgeo).alias('rec_aie'),
-            (pl.col('tcaishyp')  * pl.col('nbacte9623') * pl.col('cprudent') * cgeo).alias('rec_rcon3')
-            )
+            (pl.col('trdt5_9610')   * pl.col('nbacte9610') * pl.col('cprudent') * cgeo).alias('rec_rdt5'),
+            (pl.col('tprot_9619')   * pl.col('nbacte9619') * pl.col('cprudent') * cgeo).alias('rec_prot'),
+            (pl.col('tict_9620')    * pl.col('nbacte9620') * pl.col('cprudent') * cgeo).alias('rec_ict'),
+            (pl.col('tcyb_9621')    * pl.col('nbacte9621') * pl.col('cprudent') * cgeo).alias('rec_cyb'),
+            (pl.col('tgam_6523')    * pl.col('nbacte6523') * pl.col('cprudent') * cgeo).alias('rec_gam'),
+            (pl.col('trconf_9622')  * pl.col('nbacte9622') * pl.col('cprudent') * cgeo).alias('rec_rcon1'),
+            (pl.col('trconf_9625')  * pl.col('nbacte9625') * pl.col('cprudent') * cgeo).alias('rec_rcon2'),
+            (pl.col('ttciea_9631')  * pl.col('nbacte9631') * pl.col('cprudent') * cgeo).alias('rec_tciea'),
+            (pl.col('ttcies_9632')  * pl.col('nbacte9632') * pl.col('cprudent') * cgeo).alias('rec_tcies'),
+            (pl.col('taie_9633')    * pl.col('nbacte9633') * pl.col('cprudent') * cgeo).alias('rec_aie'),
+            (pl.col('trconf_9623')  * pl.col('nbacte9623') * pl.col('cprudent') * cgeo).alias('rec_rcon3'))
+        .with_columns(
+            pl.sum_horizontal('rec_rdt5', 'rec_prot', 'rec_ict', 'rec_cyb', 'rec_gam', 'rec_rcon1',
+                'rec_rcon2', 'rec_tciea', 'rec_tcies', 'rec_aie', 'rec_rcon3').alias('rec_rdt_tot')
+            )   
         # po
         # rehosp
         # suppléments pie
+        .with_columns(
+            (pl.col('tsc')  * pl.col('pie_src') * pl.col('cprudent') * cgeo).alias('rec_pie_src'),
+            (pl.col('tsi')  * pl.col('pie_stf') * pl.col('cprudent') * cgeo).alias('rec_pie_stf'),
+            (pl.col('trea') * pl.col('pie_rep') * pl.col('cprudent') * cgeo).alias('rec_pie_rea'),
+            (pl.col('trep') * pl.col('pie_rep') * pl.col('cprudent') * cgeo).alias('rec_pie_rep'),
+            (pl.col('tnn1') * pl.col('pie_nn1') * pl.col('cprudent') * cgeo).alias('rec_pie_nn1'),
+            (pl.col('tnn2') * pl.col('pie_nn2') * pl.col('cprudent') * cgeo).alias('rec_pie_nn2'),
+            (pl.col('tnn3') * pl.col('pie_nn3') * pl.col('cprudent') * cgeo).alias('rec_pie_nn3')
+            )
         # ajout des pie aux supp structures classiques
+        .with_columns(
+            pl.sum_horizontal(['rec_rep', 'rec_pie_rep']).alias('rec_rep'),
+            pl.sum_horizontal(['rec_rea', 'rec_pie_rea']).alias('rec_rea'),
+            pl.sum_horizontal(['rec_stf', 'rec_pie_stf']).alias('rec_stf'),
+            pl.sum_horizontal(['rec_src', 'rec_pie_src']).alias('rec_src'),
+            pl.sum_horizontal(['rec_nn1', 'rec_pie_nn1']).alias('rec_nn1'),
+            pl.sum_horizontal(['rec_nn2', 'rec_pie_nn2']).alias('rec_nn2'),
+            pl.sum_horizontal(['rec_nn3', 'rec_pie_nn3']).alias('rec_nn3')
+            )
         .collect()
         )
 
