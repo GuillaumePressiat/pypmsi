@@ -1,7 +1,7 @@
 
 import polars as pl
 from pypmsi.utils import *
-
+import polars.selectors as cs
 
 # tarifs = rp.get_table('tarifs_mco_ghs')
 
@@ -209,8 +209,7 @@ def vvs_ghs_supp(
         )
 
 
-    # pie
-    # todo : import du fichcomp pie
+    # préparer pie
     trans_pie = (
         pie
         .group_by('cle_rsa', 'code_pie')
@@ -222,14 +221,41 @@ def vvs_ghs_supp(
         .filter(~pl.col('cle_rsa').is_null())
         )
 
-    # Import dip
+    # préparer dip
     dip = (
         diap
         .group_by('cle_rsa')
         .agg(pl.col('nbsup').sum().alias('nbdip'))
     )
 
-    # Importer po
+    # préparer po
+    po = (
+        porg
+        .with_columns(
+            pl.when(pl.col('cdpo') == 'PO1').then(1).otherwise(0).alias('nb_poi'),
+            pl.when(pl.col('cdpo') == 'PO2').then(1).otherwise(0).alias('nb_poii'),
+            pl.when(pl.col('cdpo') == 'PO3').then(1).otherwise(0).alias('nb_poiii'),
+            pl.when(pl.col('cdpo') == 'PO4').then(1).otherwise(0).alias('nb_poiv'),
+            pl.when(pl.col('cdpo') == 'PO5').then(1).otherwise(0).alias('nb_pov'),
+            pl.when(pl.col('cdpo') == 'PO6').then(1).otherwise(0).alias('nb_povi'),
+            pl.when(pl.col('cdpo') == 'PO7').then(1).otherwise(0).alias('nb_povii'),
+            pl.when(pl.col('cdpo') == 'PO8').then(1).otherwise(0).alias('nb_poviii'),
+            pl.when(pl.col('cdpo') == 'PO9').then(1).otherwise(0).alias('nb_poix'),
+            pl.when(pl.col('cdpo') == 'POA').then(1).otherwise(0).alias('nb_poa')
+            )
+        .group_by('cle_rsa')
+        .agg(cs.starts_with('nb_').sum())
+        .with_columns(
+            pl.when(pl.col('nb_poiv') > 0).then(0).otherwise(pl.col('nb_poi')).alias('nb_poi'),
+            pl.when(pl.col('nb_poiv') > 0).then(0).otherwise(pl.col('nb_poii')).alias('nb_poii'),
+            pl.when(pl.col('nb_poiv') > 0).then(0).otherwise(pl.col('nb_poiii')).alias('nb_poiii')
+            )
+        .join(rsa_valo.select('cle_rsa'), on = 'cle_rsa', how = 'outer')
+        .with_columns(cs.starts_with("nb_").fill_null(strategy="zero"))
+        )
+
+
+    for i in range(po.shape[0]):
 
     if rsa_valo['anseqta'].unique().max() < '2017':
         rsa_valo = (

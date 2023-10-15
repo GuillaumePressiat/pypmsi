@@ -162,7 +162,7 @@ def ipie_mco(finess, annee : int, mois : int, path : str, typpie : str = "out", 
         annee (int): Description
         mois (int): Description
         path (str): Description
-        typdiap (str, optional): Description
+        typpie (str, optional): Description
     
     Returns:
         pl.DataFrame: Dataframe contenant les PIE (fichcomp) du du out
@@ -182,3 +182,45 @@ def ipie_mco(finess, annee : int, mois : int, path : str, typpie : str = "out", 
 
     return df
 
+def ipo(finess, annee : int, mois : int, path : str, typpo : str = "out", filepath = "", n_rows = None) -> pl.DataFrame:
+    """Découper le fichier PORG du out
+    
+    Args:
+        finess (TYPE): Description
+        annee (int): Description
+        mois (int): Description
+        path (str): Description
+        typpo (str, optional): Description
+    
+    Returns:
+        pl.DataFrame: Dataframe contenant les PORG (fichcomp) du du out
+    """
+    if typpo == "in":
+        if filepath != "":
+            file_in = filepath
+        else:
+            file_in = (
+                path
+                + "/"
+                + str(finess)
+                + "."
+                + str(annee)
+                + "."
+                + str(mois)
+                + "."
+                + "porg.txt"
+            )
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
+        df = parse_pmsi_fwf(df, "mco", "ffc_in", annee)
+    else:
+        if filepath != "":
+            file_in = filepath
+        else:
+            file_in = (
+                path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "porg"
+            )
+        df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
+        df = parse_pmsi_fwf(df, "mco", "rsa_po", annee)
+
+
+    return df

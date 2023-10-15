@@ -6,6 +6,7 @@ from pypmsi.mco.fichcomps import imed_mco
 from pypmsi.mco.fichcomps import idmi_mco
 from pypmsi.mco.fichcomps import idiap_mco
 from pypmsi.mco.fichcomps import ipie_mco
+from pypmsi.mco.fichcomps import ipo
 from pypmsi.mco.irsf import irsf
 from pypmsi.mco.irsfa import irsfa
 
@@ -127,6 +128,10 @@ class noyau_pmsi:
         noyau.update_args(**kwargs)
         return ipie_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typpie = typpie, n_rows = n_rows)
 
+    def ipo(self, typpo = "out", n_rows = None, **kwargs):
+        noyau = copy.copy(self)
+        noyau.update_args(**kwargs)
+        return ipo(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typpo = typpo, n_rows = n_rows)
 
 class chemin_pmsi:
     def __init__(self, **kwargs):
@@ -210,9 +215,15 @@ class chemin_pmsi:
     def read_diap_mco(self, typdiap = "out", n_rows = None, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return imed_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typdiap = typdiap, n_rows = n_rows)
+        return idiap_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typdiap = typdiap, n_rows = n_rows)
 
     def read_pie_mco(self, typpie = "out", n_rows = None, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return imed_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typpie = typpie, n_rows = n_rows)
+        return ipie_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typpie = typpie, n_rows = n_rows)
+
+    def read_po(self, typpo = "out", n_rows = None, **kwargs):
+        noyau = copy.copy(self)
+        noyau.update_args(**kwargs)
+        return imed_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typpo = typpo, n_rows = n_rows)
+
