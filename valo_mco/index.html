@@ -283,43 +283,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#exemple-sur-2022" class="md-nav__link">
-    Exemple sur 2022
-  </a>
-  
-    <nav class="md-nav" aria-label="Exemple sur 2022">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#parametres-et-lecture-des-donnees" class="md-nav__link">
     Paramètres et lecture des données
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#tarifs-ghs-et-supplements" class="md-nav__link">
     Tarifs ghs et suppléments
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#calculs-de-valorisations" class="md-nav__link">
     Calculs de valorisations
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#tableau-sejours-valorises-e-pmsi" class="md-nav__link">
-    Tableau Séjours valorisés e-PMSI
+      
+        <li class="md-nav__item">
+  <a href="#tableau-sv-sejours-valorises-e-pmsi" class="md-nav__link">
+    Tableau SV - Séjours valorisés e-PMSI
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#tableau-rav-recapitulatif-activite-valorisation-e-pmsi" class="md-nav__link">
+    Tableau RAV - Récapitulatif Activité valorisation e-PMSI
+  </a>
   
 </li>
       
@@ -827,43 +821,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#exemple-sur-2022" class="md-nav__link">
-    Exemple sur 2022
-  </a>
-  
-    <nav class="md-nav" aria-label="Exemple sur 2022">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#parametres-et-lecture-des-donnees" class="md-nav__link">
     Paramètres et lecture des données
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#tarifs-ghs-et-supplements" class="md-nav__link">
     Tarifs ghs et suppléments
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#calculs-de-valorisations" class="md-nav__link">
     Calculs de valorisations
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#tableau-sejours-valorises-e-pmsi" class="md-nav__link">
-    Tableau Séjours valorisés e-PMSI
+      
+        <li class="md-nav__item">
+  <a href="#tableau-sv-sejours-valorises-e-pmsi" class="md-nav__link">
+    Tableau SV - Séjours valorisés e-PMSI
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#tableau-rav-recapitulatif-activite-valorisation-e-pmsi" class="md-nav__link">
+    Tableau RAV - Récapitulatif Activité valorisation e-PMSI
+  </a>
   
 </li>
       
@@ -886,7 +874,6 @@
 
 
 <h1 id="valoriser-les-rsa-comme-e-pmsi">Valoriser les RSA comme e-PMSI</h1>
-<h2 id="exemple-sur-2022">Exemple sur 2022</h2>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">pypmsi</span> <span class="k">as</span> <span class="nn">pm</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span> <span class="nn">refpymsi</span> <span class="k">as</span> <span class="nn">rp</span>
@@ -921,7 +908,7 @@
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>                                    <span class="n">porg</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">ipo</span><span class="p">())</span>
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>          <span class="p">)</span>
 </span></code></pre></div>
-<h3 id="tableau-sejours-valorises-e-pmsi">Tableau Séjours valorisés e-PMSI</h3>
+<h3 id="tableau-sv-sejours-valorises-e-pmsi">Tableau SV - Séjours valorisés e-PMSI</h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">(</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">python_valo_sej</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s1">&#39;type_fin&#39;</span><span class="p">)</span>
@@ -929,6 +916,15 @@
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>            <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;rec_totale&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;recette_br_avec_coeffs&#39;</span><span class="p">))</span>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;type_fin&#39;</span><span class="p">)</span>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="tableau-rav-recapitulatif-activite-valorisation-e-pmsi">Tableau RAV - Récapitulatif Activité valorisation e-PMSI</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">polars.selectors</span> <span class="k">as</span> <span class="nn">cs</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">(</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">python_valo_sej</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">starts_with</span><span class="p">(</span><span class="s1">&#39;rec&#39;</span><span class="p">))</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">variable_name</span> <span class="o">=</span> <span class="s1">&#39;rubrique&#39;</span><span class="p">,</span> <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;recette&#39;</span><span class="p">)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">)</span>
 </span></code></pre></div>
 
 
