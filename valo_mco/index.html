@@ -9,21 +9,21 @@
       
       
       
-        <link rel="prev" href="../imed/">
+        <link rel="prev" href="../statistiques_exemple/">
       
       
-        <link rel="next" href="../irsf/">
+        <link rel="next" href="../HAD/iano/">
       
-      <link rel="icon" href="../../assets/rigologo_pypmsi.png">
+      <link rel="icon" href="../assets/rigologo_pypmsi.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.17">
     
     
       
-        <title>RSA - pypmsi</title>
+        <title>Valoriser les RSA comme e-PMSI - pypmsi</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.26e3688c.min.css">
       
       
 
@@ -39,7 +39,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -61,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rsa" class="md-skip">
+        <a href="#valoriser-les-rsa-comme-e-pmsi" class="md-skip">
           Aller au contenu
         </a>
       
@@ -77,9 +77,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="En-tête">
-    <a href="../.." title="pypmsi" class="md-header__button md-logo" aria-label="pypmsi" data-md-component="logo">
+    <a href=".." title="pypmsi" class="md-header__button md-logo" aria-label="pypmsi" data-md-component="logo">
       
-  <img src="../../assets/rigologo_pypmsi.png" alt="logo">
+  <img src="../assets/rigologo_pypmsi.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -95,7 +95,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              RSA
+              Valoriser les RSA comme e-PMSI
             
           </span>
         </div>
@@ -174,9 +174,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="pypmsi" class="md-nav__button md-logo" aria-label="pypmsi" data-md-component="logo">
+    <a href=".." title="pypmsi" class="md-nav__button md-logo" aria-label="pypmsi" data-md-component="logo">
       
-  <img src="../../assets/rigologo_pypmsi.png" alt="logo">
+  <img src="../assets/rigologo_pypmsi.png" alt="logo">
 
     </a>
     pypmsi
@@ -204,7 +204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         pypmsi : lire des fichiers PMSI avec python / pola.rs
       </a>
     </li>
@@ -219,7 +219,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../noyau/" class="md-nav__link">
+      <a href="../noyau/" class="md-nav__link">
         Noyau de paramètres
       </a>
     </li>
@@ -234,7 +234,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../statistiques_exemple/" class="md-nav__link">
+      <a href="../statistiques_exemple/" class="md-nav__link">
         Exemple de statistiques
       </a>
     </li>
@@ -247,11 +247,86 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../valo_mco/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Valoriser les RSA comme e-PMSI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Valoriser les RSA comme e-PMSI
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exemple-sur-2022" class="md-nav__link">
+    Exemple sur 2022
+  </a>
+  
+    <nav class="md-nav" aria-label="Exemple sur 2022">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametres-et-lecture-des-donnees" class="md-nav__link">
+    Paramètres et lecture des données
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarifs-ghs-et-supplements" class="md-nav__link">
+    Tarifs ghs et suppléments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calculs-de-valorisations" class="md-nav__link">
+    Calculs de valorisations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tableau-sejours-valorises-e-pmsi" class="md-nav__link">
+    Tableau Séjours valorisés e-PMSI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -291,7 +366,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../HAD/iano/" class="md-nav__link">
+      <a href="../HAD/iano/" class="md-nav__link">
         ANO-HOSP
       </a>
     </li>
@@ -305,7 +380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../HAD/imed/" class="md-nav__link">
+      <a href="../HAD/imed/" class="md-nav__link">
         MED
       </a>
     </li>
@@ -319,7 +394,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../HAD/irapss/" class="md-nav__link">
+      <a href="../HAD/irapss/" class="md-nav__link">
         RAPSS
       </a>
     </li>
@@ -333,7 +408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../HAD/irpss/" class="md-nav__link">
+      <a href="../HAD/irpss/" class="md-nav__link">
         RPSS
       </a>
     </li>
@@ -353,16 +428,14 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
       
       
       
@@ -371,7 +444,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           MCO
@@ -384,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../iano/" class="md-nav__link">
+      <a href="../MCO/iano/" class="md-nav__link">
         ANO-HOSP
       </a>
     </li>
@@ -398,7 +471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../imed/" class="md-nav__link">
+      <a href="../MCO/imed/" class="md-nav__link">
         MED / DMI
       </a>
     </li>
@@ -410,66 +483,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          RSA
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../MCO/irsa/" class="md-nav__link">
         RSA
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table des matières
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#syntaxe" class="md-nav__link">
-    Syntaxe
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#types-dimports" class="md-nav__link">
-    Types d'imports
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parametres" class="md-nav__link">
-    Paramètres
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -481,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../irsf/" class="md-nav__link">
+      <a href="../MCO/irsf/" class="md-nav__link">
         RSF
       </a>
     </li>
@@ -495,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../irsfa/" class="md-nav__link">
+      <a href="../MCO/irsfa/" class="md-nav__link">
         RSFA
       </a>
     </li>
@@ -509,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../irum/" class="md-nav__link">
+      <a href="../MCO/irum/" class="md-nav__link">
         RUM / RSS
       </a>
     </li>
@@ -558,7 +576,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Psy/iano/" class="md-nav__link">
+      <a href="../Psy/iano/" class="md-nav__link">
         ANO-HOSP
       </a>
     </li>
@@ -572,7 +590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Psy/ir3a/" class="md-nav__link">
+      <a href="../Psy/ir3a/" class="md-nav__link">
         R3A
       </a>
     </li>
@@ -586,7 +604,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Psy/iraa/" class="md-nav__link">
+      <a href="../Psy/iraa/" class="md-nav__link">
         RAA
       </a>
     </li>
@@ -600,7 +618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Psy/irps/" class="md-nav__link">
+      <a href="../Psy/irps/" class="md-nav__link">
         RPS
       </a>
     </li>
@@ -614,7 +632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Psy/irpsa/" class="md-nav__link">
+      <a href="../Psy/irpsa/" class="md-nav__link">
         RPSA
       </a>
     </li>
@@ -663,7 +681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../SSR/iano/" class="md-nav__link">
+      <a href="../SSR/iano/" class="md-nav__link">
         ANO-HOSP
       </a>
     </li>
@@ -677,7 +695,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../SSR/imed/" class="md-nav__link">
+      <a href="../SSR/imed/" class="md-nav__link">
         MED
       </a>
     </li>
@@ -691,7 +709,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../SSR/irha/" class="md-nav__link">
+      <a href="../SSR/irha/" class="md-nav__link">
         RHA
       </a>
     </li>
@@ -705,7 +723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../SSR/irhs/" class="md-nav__link">
+      <a href="../SSR/irhs/" class="md-nav__link">
         RHS
       </a>
     </li>
@@ -719,7 +737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../SSR/issrha/" class="md-nav__link">
+      <a href="../SSR/issrha/" class="md-nav__link">
         SSRHA
       </a>
     </li>
@@ -768,7 +786,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tra/itra/" class="md-nav__link">
+      <a href="../tra/itra/" class="md-nav__link">
         TRA
       </a>
     </li>
@@ -809,23 +827,43 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#syntaxe" class="md-nav__link">
-    Syntaxe
+  <a href="#exemple-sur-2022" class="md-nav__link">
+    Exemple sur 2022
+  </a>
+  
+    <nav class="md-nav" aria-label="Exemple sur 2022">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametres-et-lecture-des-donnees" class="md-nav__link">
+    Paramètres et lecture des données
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#types-dimports" class="md-nav__link">
-    Types d'imports
+        
+          <li class="md-nav__item">
+  <a href="#tarifs-ghs-et-supplements" class="md-nav__link">
+    Tarifs ghs et suppléments
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#parametres" class="md-nav__link">
-    Paramètres
+        
+          <li class="md-nav__item">
+  <a href="#calculs-de-valorisations" class="md-nav__link">
+    Calculs de valorisations
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tableau-sejours-valorises-e-pmsi" class="md-nav__link">
+    Tableau Séjours valorisés e-PMSI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -847,42 +885,51 @@
   
 
 
-<h1 id="rsa">RSA</h1>
-<p>Lecture des fichiers RSA depuis 2011, résumés de sorties anonymisés.</p>
-<h2 id="syntaxe">Syntaxe</h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">irsa</span><span class="p">(</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">finess</span><span class="p">,</span> 
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">annee</span> <span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">mois</span> <span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">path</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">typi</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> 
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">tdiag</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> 
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> 
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">n_rows</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<h1 id="valoriser-les-rsa-comme-e-pmsi">Valoriser les RSA comme e-PMSI</h1>
+<h2 id="exemple-sur-2022">Exemple sur 2022</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">pypmsi</span> <span class="k">as</span> <span class="nn">pm</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span> <span class="nn">refpymsi</span> <span class="k">as</span> <span class="nn">rp</span>
 </span></code></pre></div>
-<h2 id="types-dimports">Types d'imports</h2>
-<p>Le paramètre <code>typi</code> permet de choisir le type d'import entre : </p>
-<p>6 types d'imports (typi)</p>
-<ul>
-<li>1 : partie fixe uniquement</li>
-<li>2 : partie fixe + zones streams actes, das</li>
-<li>3 : partie fixe + zones streams actes, das, dpum, drum, typaut</li>
-<li><strong>4 : partie fixe + parties variables</strong></li>
-<li>5 : partie fixe + parties variables + zones streams actes, das</li>
-<li>6 : partie fixe + parties variables + zones streams actes, das, dpum, drum, typaut</li>
-</ul>
-<p><strong>4</strong> est l'import par défaut.</p>
-<h2 id="parametres">Paramètres</h2>
-<ul>
-<li>finess : le finess juridique du fichier rsa</li>
-<li>annee : l'année de la période PMSI</li>
-<li>mois  : le mois de la période PMSI</li>
-<li>path : le repertoire d'accès au fichier</li>
-<li>typi : le type d'import</li>
-<li>tdiag : les diagnostics doivent-ils être "rangés dans une table unique"</li>
-<li>filepath : chemin du fichier rsa si import d'un fichier direct sans les autres paramètres</li>
-<li>n_rows : nombre de lignes si import limité</li>
-</ul>
+<h3 id="parametres-et-lecture-des-donnees">Paramètres et lecture des données</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">p</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">noyau_pmsi</span><span class="p">(</span><span class="n">finess</span> <span class="o">=</span> <span class="mi">290000017</span><span class="p">,</span> 
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>              <span class="n">annee</span>  <span class="o">=</span> <span class="mi">2022</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>              <span class="n">mois</span>   <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>              <span class="n">path</span>   <span class="o">=</span> <span class="s1">&#39;/Users/guillaumepressiat/Documents/data/mco&#39;</span><span class="p">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">rsa</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">irsa</span><span class="p">(</span><span class="n">typi</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">vrsa</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">vvs_rsa</span><span class="p">(</span><span class="n">rsa</span><span class="p">)</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">vano</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">vvs_ano_mco</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">iano_mco</span><span class="p">())</span>
+</span></code></pre></div>
+<h3 id="tarifs-ghs-et-supplements">Tarifs ghs et suppléments</h3>
+<p>On utilise le package <a href="https://github.com/GuillaumePressiat/refpymsi">refpymsi</a>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">tarifs</span> <span class="o">=</span> <span class="n">rp</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;tarifs_mco_ghs&#39;</span><span class="p">)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">supplements</span> <span class="o">=</span> <span class="n">rp</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;tarifs_mco_supplements&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="calculs-de-valorisations">Calculs de valorisations</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">python_valo_sej</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">vvs_mco</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">vvs_ghs_supp</span><span class="p">(</span><span class="n">vrsa</span><span class="p">,</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>                                      <span class="n">tarifs</span><span class="p">,</span> 
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>                                      <span class="n">supplements</span><span class="p">,</span> 
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>                                      <span class="n">bee</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> 
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>                                      <span class="n">diap</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">idiap_mco</span><span class="p">(),</span> 
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>                                      <span class="n">pie</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">ipie_mco</span><span class="p">(),</span> 
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>                                      <span class="n">porg</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">ipo</span><span class="p">(),</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>                                      <span class="n">prudent</span> <span class="o">=</span> <span class="mf">0.9965</span><span class="p">),</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>                      <span class="n">pm</span><span class="o">.</span><span class="n">vvs_mco_sv</span><span class="p">(</span><span class="n">vrsa</span><span class="p">,</span> 
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>                                    <span class="n">vano</span><span class="p">,</span> 
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>                                    <span class="n">porg</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">ipo</span><span class="p">())</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>          <span class="p">)</span>
+</span></code></pre></div>
+<h3 id="tableau-sejours-valorises-e-pmsi">Tableau Séjours valorisés e-PMSI</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">(</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">python_valo_sej</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s1">&#39;type_fin&#39;</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;cle_rsa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;nb_rsa&#39;</span><span class="p">),</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>            <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;rec_totale&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;recette_br_avec_coeffs&#39;</span><span class="p">))</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;type_fin&#39;</span><span class="p">)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">)</span>
+</span></code></pre></div>
 
 
 
@@ -904,7 +951,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Pied de page" >
         
           
-          <a href="../imed/" class="md-footer__link md-footer__link--prev" aria-label="Précédent: MED / DMI" rel="prev">
+          <a href="../statistiques_exemple/" class="md-footer__link md-footer__link--prev" aria-label="Précédent: Exemple de statistiques" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -913,20 +960,20 @@
                 Précédent
               </span>
               <div class="md-ellipsis">
-                MED / DMI
+                Exemple de statistiques
               </div>
             </div>
           </a>
         
         
           
-          <a href="../irsf/" class="md-footer__link md-footer__link--next" aria-label="Suivant: RSF" rel="next">
+          <a href="../HAD/iano/" class="md-footer__link md-footer__link--next" aria-label="Suivant: ANO-HOSP" rel="next">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Suivant
               </span>
               <div class="md-ellipsis">
-                RSF
+                ANO-HOSP
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -988,10 +1035,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.footer"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "navigation.footer"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.b425cdc4.min.js"></script>
+      <script src="../assets/javascripts/bundle.b425cdc4.min.js"></script>
       
     
   </body>
