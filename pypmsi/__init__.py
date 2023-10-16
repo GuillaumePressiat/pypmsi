@@ -55,4 +55,6 @@ from pypmsi.mco.vvs.vvs_rsa import vvs_rsa_hors_periode
 from pypmsi.mco.vvs.vvs_rsa import vvs_ano_mco
 
 from pypmsi.mco.vvs.vvs_ghs_supp import vvs_ghs_supp
+from pypmsi.mco.vvs.vvs_mco_sv import vvs_mco_sv
+from pypmsi.mco.vvs.vvs_mco import vvs_mco
 

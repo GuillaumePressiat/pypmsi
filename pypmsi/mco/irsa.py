@@ -46,7 +46,7 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
     df = (df
         .with_columns(
             pl.concat_str(['rsacmd', 'rsatype', 'rsanum', 'rsacompx']).alias('ghm'),
-            pl.when(pl.col('moissor') < '03').then((pl.col('ansor').cast(pl.Int32)-1).cast(pl.Utf8)).otherwise(pl.col('ansor')).alias('anseqta'))
+            pl.when(pl.col('moissor') < '03').then((pl.col('ansor').cast(pl.Int32, strict = False)-1).cast(pl.Utf8)).otherwise(pl.col('ansor')).alias('anseqta'))
         )
 
     patterns_rsa = get_patterns(str(annee), "rsa")
