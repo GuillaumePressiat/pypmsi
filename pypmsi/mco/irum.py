@@ -120,13 +120,13 @@ def irum(
         .with_columns(
             [
                 pl.struct(["zad", "ldas_e"])
-                .apply(lambda x: x["zad"][slice(x["ldas_e"])])
+                .map_elements(lambda x: x["zad"][slice(x["ldas_e"])])
                 .alias("zdas"),
                 pl.struct(["zad", "ldad_e", "ldad_s"])
-                .apply(lambda x: x["zad"][slice(x["ldad_s"], x["ldad_e"])])
+                .map_elements(lambda x: x["zad"][slice(x["ldad_s"], x["ldad_e"])])
                 .alias("zdad"),
                 pl.struct(["zad", "lacte_e", "lacte_s"])
-                .apply(lambda x: x["zad"][slice(x["lacte_s"], x["lacte_e"])])
+                .map_elements(lambda x: x["zad"][slice(x["lacte_s"], x["lacte_e"])])
                 .alias("zactes"),
             ]
         )
@@ -154,15 +154,15 @@ def irum(
                 [
                     df["zactes"]
                     .str.extract_all("[A-Z]{4}[0-9]{3}")
-                    .apply(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_actes"),
                     df["zdas"]
                     .str.extract_all("[A-Z0-9\+]{1,8}")
-                    .apply(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_das"),
                     df["zdad"]
                     .str.extract_all("[a-zA-Z0-9\+]{1,8}")
-                    .apply(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_dad"),
                 ]
             )

@@ -127,13 +127,13 @@ def irhs(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
         .with_columns(
             [
                 pl.struct(["zad", "ldas_e"])
-                .apply(lambda x: x["zad"][slice(x["ldas_e"])])
+                .map_elements(lambda x: x["zad"][slice(x["ldas_e"])])
                 .alias("zdas"),
                 pl.struct(["zad", "lcsarr_e", "lcsarr_s"])
-                .apply(lambda x: x["zad"][slice(x["lcsarr_s"], x["lcsarr_e"])])
+                .map_elements(lambda x: x["zad"][slice(x["lcsarr_s"], x["lcsarr_e"])])
                 .alias("zcsarr"),
                 pl.struct(["zad", "lccam_e", "lccam_s"])
-                .apply(lambda x: x["zad"][slice(x["lccam_s"], x["lccam_e"])])
+                .map_elements(lambda x: x["zad"][slice(x["lccam_s"], x["lccam_e"])])
                 .alias("zccam"),
             ]
         )
@@ -151,15 +151,15 @@ def irhs(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                 [
                     df["zccam"]
                     .str.extract_all("[A-Z]{4}[0-9]{3}")
-                    .apply(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_ccam"),
                     df["zdas"]
                     .str.extract_all("[A-Z0-9\+]{1,8}")
-                    .apply(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_das"),
                     df["zcsarr"]
                     .str.extract_all("[a-zA-Z]{2,3}[0-9\+]{2,4}")
-                    .apply(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_csarr"),
                 ]
             )

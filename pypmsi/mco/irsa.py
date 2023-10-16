@@ -119,19 +119,19 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
         .with_columns(
             [
                 pl.struct(["za", "aut_e"])
-                .apply(lambda x: x["za"][slice(x["aut_e"])])
+                .map_elements(lambda x: x["za"][slice(x["aut_e"])])
                 .alias("zaut"),
                 pl.struct(["za", "rdth_s", "rdth_e"])
-                .apply(lambda x: x["za"][slice(x["rdth_s"], x["rdth_e"])])
+                .map_elements(lambda x: x["za"][slice(x["rdth_s"], x["rdth_e"])])
                 .alias("zrdth"),
                 pl.struct(["za", "rum_e", "rum_s"])
-                .apply(lambda x: x["za"][slice(x["rum_s"], x["rum_e"])])
+                .map_elements(lambda x: x["za"][slice(x["rum_s"], x["rum_e"])])
                 .alias("zum"),
                 pl.struct(["za", "das_s", "das_e"])
-                .apply(lambda x: x["za"][slice(x["das_s"], x["das_e"])])
+                .map_elements(lambda x: x["za"][slice(x["das_s"], x["das_e"])])
                 .alias("zdas"),
                 pl.struct(["za", "actes_s", "actes_e"])
-                .apply(lambda x: x["za"][slice(x["actes_s"], x["actes_e"])])
+                .map_elements(lambda x: x["za"][slice(x["actes_s"], x["actes_e"])])
                 .alias("zactes"),
             ]
         )
@@ -161,11 +161,11 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                 [
                     df["zactes"]
                     .str.extract_all("[A-Z]{4}[0-9]{3}")
-                    .apply(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_actes"),
                     df["zdas"]
                     .str.extract_all("[A-Z][0-9\+]{1,8}")
-                    .apply(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_das"),
                 ]
             )
@@ -192,17 +192,17 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                 [
                     pl.col("zum")
                     .str.extract_all("[0-9]{2}[AB ][PCM]")
-                    .apply(lambda x: str(", ".join(x)))
+                    .map_elements(lambda x: str(", ".join(x)))
                     .alias("stream_um"),
                     pl.col("UM")
-                    .apply(
+                    .map_elements(
                         lambda x: str(
                             ", ".join(set(x.apply(lambda y: y[slice(sdpum, edpum)].rstrip())))
                         )
                     )
                     .alias("stream_dpum"),
                     pl.col("UM")
-                    .apply(
+                    .map_elements(
                         lambda x: str(
                             ", ".join(set(x.apply(lambda y: y[slice(sdrum, edrum)])))
                         )
