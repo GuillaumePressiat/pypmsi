@@ -271,6 +271,7 @@ def vvs_ghs_supp(
     rsa_valo = (
         rsa_valo
         .join(dip, on = 'cle_rsa', how = 'left')
+        .join(po, on = 'cle_rsa', how = 'left')
         .join(trans_pie, on = 'cle_rsa', how = 'left')
         .join(supplements, on = 'anseqta', how = 'left')
         .lazy()
@@ -321,6 +322,22 @@ def vvs_ghs_supp(
                 'rec_rcon2', 'rec_tciea', 'rec_tcies', 'rec_aie', 'rec_rcon3').alias('rec_rdt_tot')
             )   
         # po
+        .with_columns(
+            (pl.col('tpoi')   * pl.col('nb_poi') * pl.col('cprudent') * cgeo).alias('rec_poi'),
+            (pl.col('tpoii')   * pl.col('nb_poii') * pl.col('cprudent') * cgeo).alias('rec_poii'),
+            (pl.col('tpoiii')   * pl.col('nb_poiii') * pl.col('cprudent') * cgeo).alias('rec_poiii'),
+            (pl.col('tpoiv')   * pl.col('nb_poiv') * pl.col('cprudent') * cgeo).alias('rec_poiv'),
+            (pl.col('tpov')   * pl.col('nb_pov') * pl.col('cprudent') * cgeo).alias('rec_pov'),
+            (pl.col('tpovi')   * pl.col('nb_povi') * pl.col('cprudent') * cgeo).alias('rec_povi'),
+            (pl.col('tpovii')   * pl.col('nb_povii') * pl.col('cprudent') * cgeo).alias('rec_povii'),
+            (pl.col('tpoviii')   * pl.col('nb_poviii') * pl.col('cprudent') * cgeo).alias('rec_poviii'),
+            (pl.col('tpoix')   * pl.col('nb_poix') * pl.col('cprudent') * cgeo).alias('rec_poix'),
+            (pl.col('tpoa')   * pl.col('nb_poa') * pl.col('cprudent') * cgeo).alias('rec_poa'))
+            .with_columns(
+            pl.sum_horizontal('rec_poi', 'rec_poii', 'rec_poiii', 'rec_poiv', 'rec_pov', 'rec_povi',
+                'rec_povii', 'rec_poviii', 'rec_poix', 'rec_poix', 'rec_poa').alias('rec_po_tot')
+        
+            )
         # rehosp
         # suppléments pie
         .with_columns(
@@ -345,9 +362,34 @@ def vvs_ghs_supp(
         .collect()
         )
 
+    
+    
     # calcul recette totale
+    rsa_valo = (
+        rsa_valo
+        .with_columns(pl.lit(None, pl.Float64).alias('rec_rehosp_ghm'))
+        .with_columns(
+            pl.sum_horizontal(['rec_bee', 'rec_rep', 'rec_rea', 'rec_stf', 'rec_src', 'rec_nn1', 'rec_nn2', 'rec_nn3',
+                'rec_dialhosp', 'rec_caishyp', 'rec_aph', 'rec_ant', 'rec_rap', 'rec_rehosp_ghm', 'rec_rdt_tot', 'rec_po_tot'])
+            .alias('rec_totale')
+            )
+        )
 
-    return rsa_valo
+    if full:
+        return (
+            rsa_valo
+            .rename({'t_bas' : 'rec_exb', 't_base' : 'rec_base', 't_haut' : 'rec_exh'})
+            )
+
+    return (
+            rsa_valo
+            .rename({'t_bas' : 'rec_exb', 't_base' : 'rec_base', 't_haut' : 'rec_exh'})
+            .select('cle_rsa', 'nbseance', 'moissor', 'anseqta', 'rec_totale', 'rec_bee', 'rec_base', 'rec_exb', 'rec_exh',
+                                     'rec_rep', 'rec_rea', 'rec_stf', 'rec_src', 'rec_nn1', 'rec_nn2', 'rec_nn3',
+                                     'rec_dialhosp', 'rec_caishyp', 'rec_aph', 'rec_ant', 'rec_rap', 'rec_rehosp_ghm',
+                                     'rec_rdt_tot', 'rec_sdc', 'rec_ctc', 'rec_po_tot')
+            # ajouter les *effectifs*
+            )
 
 
 
