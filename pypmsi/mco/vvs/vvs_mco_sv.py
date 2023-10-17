@@ -157,7 +157,7 @@ def vvs_mco_sv(rsa, ano, porg = pl.DataFrame({'cle_rsa' : ''})):
         )
 
     # caractère bloquant
-    # https://www.atih.sante.fr/suppression-du-taux-de-conversion-0
+    # https://www.atih.sante.fr/suppression-du-taux-de-conversion
 
     items_pour_bloquants = (
         ano
