@@ -27,7 +27,7 @@ class noyau_pmsi:
         self.annee  = kwargs.get('annee')
         self.mois  = kwargs.get('mois')
         self.path  = kwargs.get('path')
-
+        self.n_rows  = kwargs.get('n_rows')
 
     def update_args(self, **kwargs):
                 
@@ -43,6 +43,9 @@ class noyau_pmsi:
         if 'path' in kwargs:
             self.path = kwargs.get('path')
         
+        if 'n_rows' in kwargs:
+            self.n_rows = kwargs.get('n_rows')
+
         return self
 
     def __repr__(self):
@@ -52,178 +55,181 @@ class noyau_pmsi:
          return f"-- Noyau PMSI pour pypmsi :\n----\n-- - finess : {self.finess}\n-- - annee  : {self.annee}\n-- - mois   : {self.mois}\n-- - path   : {self.path}"
   
 
-    def irsa(self, typi = 4, tdiag = True, n_rows = None, **kwargs):
+    def irsa(self, typi = 4, tdiag = True, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        r = irsa(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typi = typi, tdiag = tdiag, n_rows = n_rows)
+        r = irsa(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typi = typi, tdiag = tdiag, n_rows = noyau.n_rows)
         return r
 
-    def itra(self, champ = 'mco', n_rows = None, **kwargs):
+    def itra(self, champ = 'mco', **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return itra(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, champ = champ, n_rows = n_rows)
+        return itra(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, champ = champ, n_rows = noyau.n_rows)
 
-    def irha(self, typi = 3, tdiag = False, n_rows = None, **kwargs):
+    def irha(self, typi = 3, tdiag = False, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irha(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typi = typi, tdiag = tdiag, n_rows = n_rows)
+        return irha(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typi = typi, tdiag = tdiag, n_rows = noyau.n_rows)
 
-    def issrha(self, n_rows = None, **kwargs):
+    def issrha(self, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return issrha(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, n_rows = n_rows)
+        return issrha(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, n_rows = noyau.n_rows)
 
-    def irum(self, typi = 3, tdiag = True, n_rows = None, **kwargs):
+    def irum(self, typi = 3, tdiag = True, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irum(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typi = typi, tdiag = tdiag, n_rows = n_rows)
+        return irum(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typi = typi, tdiag = tdiag, n_rows = noyau.n_rows)
 
-    def irhs(self, typi = 3, tdiag = False, n_rows = None, **kwargs):
+    def irhs(self, typi = 3, tdiag = False, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irhs(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typi = typi, tdiag = tdiag, n_rows = n_rows)
+        return irhs(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typi = typi, tdiag = tdiag, n_rows = noyau.n_rows)
 
-    def iano_mco(self, typano = "out", n_rows = None, **kwargs):
+    def iano_mco(self, typano = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return iano_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typano = typano, n_rows = n_rows)
+        return iano_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typano = typano, n_rows = noyau.n_rows)
  
-    def iano_ssr(self, typano = "out", n_rows = None, **kwargs):
+    def iano_ssr(self, typano = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return iano_ssr(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typano = typano, n_rows = n_rows)
+        return iano_ssr(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typano = typano, n_rows = noyau.n_rows)
      
-    def imed_mco(self, typmed = "out", n_rows = None, **kwargs):
+    def imed_mco(self, typmed = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return imed_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typmed = typmed, n_rows = n_rows)
+        return imed_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typmed = typmed, n_rows = noyau.n_rows)
 
-    def imed_ssr(self, typmed = "out", n_rows = None, **kwargs):
+    def imed_ssr(self, typmed = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return imed_ssr(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typmed = typmed, n_rows = n_rows)
+        return imed_ssr(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typmed = typmed, n_rows = noyau.n_rows)
 
-    def idmi_mco(self, typdmi = "out", n_rows = None, **kwargs):
+    def idmi_mco(self, typdmi = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return idmi_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typdmi = typdmi, n_rows = n_rows)
+        return idmi_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typdmi = typdmi, n_rows = noyau.n_rows)
 
-    def irsf(self, ini = True, n_rows = None, **kwargs):
+    def irsf(self, ini = True, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irsf(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, ini = ini, n_rows = n_rows)
+        return irsf(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, ini = ini, n_rows = noyau.n_rows)
 
-    def irsfa(self, ini = True, n_rows = None, **kwargs):
+    def irsfa(self, ini = True, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irsfa(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, n_rows = n_rows)
+        return irsfa(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, n_rows = noyau.n_rows)
 
-    def idiap_mco(self, typdiap = "out", n_rows = None, **kwargs):
+    def idiap_mco(self, typdiap = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return idiap_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typdiap = typdiap, n_rows = n_rows)
+        return idiap_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typdiap = typdiap, n_rows = noyau.n_rows)
 
-    def ipie_mco(self, typpie = "out", n_rows = None, **kwargs):
+    def ipie_mco(self, typpie = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return ipie_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typpie = typpie, n_rows = n_rows)
+        return ipie_mco(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typpie = typpie, n_rows = noyau.n_rows)
 
-    def ipo(self, typpo = "out", n_rows = None, **kwargs):
+    def ipo(self, typpo = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return ipo(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typpo = typpo, n_rows = n_rows)
+        return ipo(finess = noyau.finess, annee = noyau.annee, mois = noyau.mois, path = noyau.path, typpo = typpo, n_rows = noyau.n_rows)
 
 class chemin_pmsi:
     def __init__(self, **kwargs):
         self.filepath = kwargs.get('filepath')
-        self.annee  = kwargs.get('annee')
+        self.annee    = kwargs.get('annee')
+        self.n_rows   = kwargs.get('n_rows')
 
     def update_args(self, **kwargs):
         if 'annee' in kwargs:
             self.annee = kwargs.get('annee')
         if 'filepath' in kwargs:
             self.mois = kwargs.get('filepath')
+        if 'n_rows' in kwargs:
+            self.n_rows = kwargs.get('n_rows')
 
         return self
 
-    def read_rsa(self, typi = 1, tdiag = True, n_rows = None, **kwargs):
+    def read_rsa(self, typi = 1, tdiag = True, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irsa(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typi = typi, tdiag = tdiag, n_rows = n_rows)
+        return irsa(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typi = typi, tdiag = tdiag, n_rows = noyau.n_rows)
 
-    def read_tra(self, champ = 'mco', n_rows = None, **kwargs):
+    def read_tra(self, champ = 'mco', **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return itra(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, champ = champ, n_rows = n_rows)
+        return itra(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, champ = champ, n_rows = noyau.n_rows)
 
-    def read_rha(self, typi = 1, tdiag = False, n_rows = None, **kwargs):
+    def read_rha(self, typi = 1, tdiag = False, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irha(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typi = typi, tdiag = tdiag, n_rows = n_rows)
+        return irha(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typi = typi, tdiag = tdiag, n_rows = noyau.n_rows)
 
-    def read_ssrha(self, n_rows = None, **kwargs):
+    def read_ssrha(self, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return issrha(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, n_rows = n_rows)
+        return issrha(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, n_rows = noyau.n_rows)
 
 
-    def read_rum(self, typi = 1, tdiag = True, n_rows = None, **kwargs):
+    def read_rum(self, typi = 1, tdiag = True, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irum(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typi = typi, tdiag = tdiag, n_rows = n_rows)
+        return irum(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typi = typi, tdiag = tdiag, n_rows = noyau.n_rows)
 
-    def read_rhs(self, typi = 1, tdiag = False, n_rows = None, **kwargs):
+    def read_rhs(self, typi = 1, tdiag = False, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irhs(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typi = typi, tdiag = tdiag, n_rows = n_rows)
+        return irhs(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typi = typi, tdiag = tdiag, n_rows = noyau.n_rows)
 
-    def read_ano_mco(self, typano = "out", n_rows = None, **kwargs):
+    def read_ano_mco(self, typano = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return iano_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typano = typano, n_rows = n_rows)
+        return iano_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typano = typano, n_rows = noyau.n_rows)
 
-    def read_ano_ssr(self, typano = "out", n_rows = None, **kwargs):
+    def read_ano_ssr(self, typano = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return iano_ssr(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typano = typano, n_rows = n_rows)
+        return iano_ssr(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typano = typano, n_rows = noyau.n_rows)
 
-    def read_med_mco(self, typmed = "out", n_rows = None, **kwargs):
+    def read_med_mco(self, typmed = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return imed_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typmed = typmed, n_rows = n_rows)
+        return imed_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typmed = typmed, n_rows = noyau.n_rows)
 
-    def read_med_ssr(self, typmed = "out", n_rows = None, **kwargs):
+    def read_med_ssr(self, typmed = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return imed_ssr(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typmed = typmed, n_rows = n_rows)
+        return imed_ssr(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typmed = typmed, n_rows = noyau.n_rows)
 
-    def read_dmi_mco(self, typdmi = "out", n_rows = None, **kwargs):
+    def read_dmi_mco(self, typdmi = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return idmi_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typdmi = typdmi, n_rows = n_rows)
+        return idmi_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typdmi = typdmi, n_rows = noyau.n_rows)
 
-    def read_rsf(self, ini = True, n_rows = None, **kwargs):
+    def read_rsf(self, ini = True, **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irsf(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, ini = ini, n_rows = n_rows)
+        return irsf(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, ini = ini, n_rows = noyau.n_rows)
 
-    def read_rsfa(self,  n_rows = None, **kwargs):
+    def read_rsfa(self,  **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return irsfa(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, n_rows = n_rows)
+        return irsfa(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, n_rows = noyau.n_rows)
 
-    def read_diap_mco(self, typdiap = "out", n_rows = None, **kwargs):
+    def read_diap_mco(self, typdiap = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return idiap_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typdiap = typdiap, n_rows = n_rows)
+        return idiap_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typdiap = typdiap, n_rows = noyau.n_rows)
 
-    def read_pie_mco(self, typpie = "out", n_rows = None, **kwargs):
+    def read_pie_mco(self, typpie = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return ipie_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typpie = typpie, n_rows = n_rows)
+        return ipie_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typpie = typpie, n_rows = noyau.n_rows)
 
-    def read_po(self, typpo = "out", n_rows = None, **kwargs):
+    def read_po(self, typpo = "out", **kwargs):
         noyau = copy.copy(self)
         noyau.update_args(**kwargs)
-        return imed_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typpo = typpo, n_rows = n_rows)
+        return imed_mco(filepath = noyau.filepath, annee = noyau.annee, finess = None, mois = None, path = None, typpo = typpo, n_rows = noyau.n_rows)
 
