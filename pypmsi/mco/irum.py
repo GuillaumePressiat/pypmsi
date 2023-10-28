@@ -172,7 +172,17 @@ def irum(
     if typi == 2:
         # retourne partie fixe + stream
         rum = {
-            "rum": df.drop(["zad", "zactes", "zdas", "zdad", "ACTES"]).drop(list(filter(re.compile('^fil').match, df.columns)))
+            "rum": df.drop([
+                    "ldad_s",
+                    "zad",
+                    "ldad_e",
+                    "ldad_s",
+                    "das",
+                    "dad",
+                    "lacte_s",
+                    "lacte_e",
+                    "ldas_e",
+                    "zactes", "zdas", "zdad", "ACTES"]).drop(list(filter(re.compile('^fil').match, df.columns)))
         }
         return rum
 
