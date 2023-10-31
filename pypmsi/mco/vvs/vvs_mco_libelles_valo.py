@@ -204,125 +204,125 @@ vvs_mco_lib_detail_valo = pl.DataFrame([
 vvs_mco_lib_valo = pl.DataFrame([
     {
         "ordre_epmsi": 22,
-        "var": "rec_totale",
+        "rubrique": "rec_totale",
         "lib_valo": "Valorisation 100% T2A globale"
     },
     {
         "ordre_epmsi": 1,
-        "var": "rec_base",
+        "rubrique": "rec_base",
         "lib_valo": "Valorisation des GHS de base"
     },
     {
         "ordre_epmsi": 0,
-        "var": "rec_bee",
+        "rubrique": "rec_bee",
         "lib_valo": "Valorisation base + exb + exh"
     },
     {
         "ordre_epmsi": 2,
-        "var": "rec_exb",
+        "rubrique": "rec_exb",
         "lib_valo": "Valorisation extrême bas (à déduire)"
     },
     {
         "ordre_epmsi": 3,
-        "var": "rec_rehosp_ghm",
+        "rubrique": "rec_rehosp_ghm",
         "lib_valo": "Valorisation séjours avec rehosp dans même GHM"
     },
     {
         "ordre_epmsi": 4,
-        "var": "rec_mino_sus",
+        "rubrique": "rec_mino_sus",
         "lib_valo": "Valorisation séjours avec minoration forfaitaire liste en sus"
     },
     {
         "ordre_epmsi": 5,
-        "var": "rec_exh",
+        "rubrique": "rec_exh",
         "lib_valo": "Valorisation journées extrême haut"
     },
     {
         "ordre_epmsi": 6,
-        "var": "rec_aph",
+        "rubrique": "rec_aph",
         "lib_valo": "Valorisation actes GHS 9615 en Hospit."
     },
     {
         "ordre_epmsi": 7,
-        "var": "rec_rap",
+        "rubrique": "rec_rap",
         "lib_valo": "Valorisation suppléments radiothérapie pédiatrique"
     },
     {
         "ordre_epmsi": 8,
-        "var": "rec_ant",
+        "rubrique": "rec_ant",
         "lib_valo": "Valorisation suppléments antepartum"
     },
     {
         "ordre_epmsi": 9,
-        "var": "rec_rdt_tot",
+        "rubrique": "rec_rdt_tot",
         "lib_valo": "Valorisation actes RDTH en Hospit."
     },
     {
         "ordre_epmsi": 10,
-        "var": "rec_rea",
+        "rubrique": "rec_rea",
         "lib_valo": "Valorisation suppléments de réanimation"
     },
     {
         "ordre_epmsi": 11,
-        "var": "rec_rep",
+        "rubrique": "rec_rep",
         "lib_valo": "Valorisation suppléments de réa pédiatrique"
     },
     {
         "ordre_epmsi": 12,
-        "var": "rec_nn1",
+        "rubrique": "rec_nn1",
         "lib_valo": "Valorisation suppléments de néonat sans SI"
     },
     {
         "ordre_epmsi": 13,
-        "var": "rec_nn2",
+        "rubrique": "rec_nn2",
         "lib_valo": "Valorisation suppléments de néonat avec SI"
     },
     {
         "ordre_epmsi": 14,
-        "var": "rec_nn3",
+        "rubrique": "rec_nn3",
         "lib_valo": "Valorisation suppléments de réanimation néonat"
     },
     {
         "ordre_epmsi": 15,
-        "var": "rec_po_tot",
+        "rubrique": "rec_po_tot",
         "lib_valo": "Valorisation prélévements d organe"
     },
     {
         "ordre_epmsi": 16,
-        "var": "rec_caishyp",
+        "rubrique": "rec_caishyp",
         "lib_valo": "Valorisation des actes de caissons hyperbares en sus"
     },
     {
         "ordre_epmsi": 17,
-        "var": "rec_dialhosp",
+        "rubrique": "rec_dialhosp",
         "lib_valo": "Valorisation suppléments de dialyse"
     },
     {
         "ordre_epmsi": 18,
-        "var": "rec_sdc",
+        "rubrique": "rec_sdc",
         "lib_valo": "Valorisation supplément défibrilateur cardiaque"
     },
     {
         "ordre_epmsi": 19,
-        "var": "rec_i04",
+        "rubrique": "rec_i04",
         "lib_valo": "Valorisation suppléments Forfait Innovation I04"
     },
     {
         "ordre_epmsi": 20,
-        "var": "rec_ctc",
+        "rubrique": "rec_ctc",
         "lib_valo": "Valorisation suppléments Car-t Cells"
     },
     {
         "ordre_epmsi": 21,
-        "var": "rec_src",
+        "rubrique": "rec_src",
         "lib_valo": "Valorisation suppléments de surveillance continue"
     },
     {
         "ordre_epmsi": 22,
-        "var": "rec_stf",
+        "rubrique": "rec_stf",
         "lib_valo": "Valorisation suppléments de soins intensifs"
     }
-], schema={"ordre_epmsi": pl.Int32, "var" : pl.Utf8, "lib_valo" : pl.Utf8})
+], schema={"ordre_epmsi": pl.Int32, "rubrique" : pl.Utf8, "lib_valo" : pl.Utf8})
 
 
 vvs_mco_lib_type_sej = pl.DataFrame([
