@@ -57,8 +57,10 @@ from pypmsi.mco.vvs.vvs_rsa import vvs_ano_mco
 from pypmsi.mco.vvs.vvs_ghs_supp import vvs_ghs_supp
 from pypmsi.mco.vvs.vvs_mco_sv import vvs_mco_sv
 from pypmsi.mco.vvs.vvs_mco import vvs_mco
+from pypmsi.mco.vvs.vvs_mco_libelles_valo import vvs_mco_libelles_valo
 
 from pypmsi.requetes.requetes import prepare_rsa_pour_requetes
 from pypmsi.requetes.requetes import requete_rsa
+
 
 
