@@ -198,207 +198,207 @@ vvs_mco_lib_detail_valo = pl.DataFrame([
         "var": "rehosp_ghm",
         "libelle_detail_valo": "Réhospitalisation dans le même GHM"
     }
-])
+], schema={"var" : pl.Utf8, "libelle_detail_valo" : pl.Utf8})
 
 
 vvs_mco_lib_valo = pl.DataFrame([
     {
-        "ordre_epmsi": "22",
+        "ordre_epmsi": 22,
         "var": "rec_totale",
         "lib_valo": "Valorisation 100% T2A globale"
     },
     {
-        "ordre_epmsi": "1",
+        "ordre_epmsi": 1,
         "var": "rec_base",
         "lib_valo": "Valorisation des GHS de base"
     },
     {
-        "ordre_epmsi": "0",
+        "ordre_epmsi": 0,
         "var": "rec_bee",
         "lib_valo": "Valorisation base + exb + exh"
     },
     {
-        "ordre_epmsi": "2",
+        "ordre_epmsi": 2,
         "var": "rec_exb",
         "lib_valo": "Valorisation extrême bas (à déduire)"
     },
     {
-        "ordre_epmsi": "3",
+        "ordre_epmsi": 3,
         "var": "rec_rehosp_ghm",
         "lib_valo": "Valorisation séjours avec rehosp dans même GHM"
     },
     {
-        "ordre_epmsi": "4",
+        "ordre_epmsi": 4,
         "var": "rec_mino_sus",
         "lib_valo": "Valorisation séjours avec minoration forfaitaire liste en sus"
     },
     {
-        "ordre_epmsi": "5",
+        "ordre_epmsi": 5,
         "var": "rec_exh",
         "lib_valo": "Valorisation journées extrême haut"
     },
     {
-        "ordre_epmsi": "6",
+        "ordre_epmsi": 6,
         "var": "rec_aph",
         "lib_valo": "Valorisation actes GHS 9615 en Hospit."
     },
     {
-        "ordre_epmsi": "7",
+        "ordre_epmsi": 7,
         "var": "rec_rap",
         "lib_valo": "Valorisation suppléments radiothérapie pédiatrique"
     },
     {
-        "ordre_epmsi": "8",
+        "ordre_epmsi": 8,
         "var": "rec_ant",
         "lib_valo": "Valorisation suppléments antepartum"
     },
     {
-        "ordre_epmsi": "9",
+        "ordre_epmsi": 9,
         "var": "rec_rdt_tot",
         "lib_valo": "Valorisation actes RDTH en Hospit."
     },
     {
-        "ordre_epmsi": "10",
+        "ordre_epmsi": 10,
         "var": "rec_rea",
         "lib_valo": "Valorisation suppléments de réanimation"
     },
     {
-        "ordre_epmsi": "11",
+        "ordre_epmsi": 11,
         "var": "rec_rep",
         "lib_valo": "Valorisation suppléments de réa pédiatrique"
     },
     {
-        "ordre_epmsi": "12",
+        "ordre_epmsi": 12,
         "var": "rec_nn1",
         "lib_valo": "Valorisation suppléments de néonat sans SI"
     },
     {
-        "ordre_epmsi": "13",
+        "ordre_epmsi": 13,
         "var": "rec_nn2",
         "lib_valo": "Valorisation suppléments de néonat avec SI"
     },
     {
-        "ordre_epmsi": "14",
+        "ordre_epmsi": 14,
         "var": "rec_nn3",
         "lib_valo": "Valorisation suppléments de réanimation néonat"
     },
     {
-        "ordre_epmsi": "15",
+        "ordre_epmsi": 15,
         "var": "rec_po_tot",
         "lib_valo": "Valorisation prélévements d organe"
     },
     {
-        "ordre_epmsi": "16",
+        "ordre_epmsi": 16,
         "var": "rec_caishyp",
         "lib_valo": "Valorisation des actes de caissons hyperbares en sus"
     },
     {
-        "ordre_epmsi": "17",
+        "ordre_epmsi": 17,
         "var": "rec_dialhosp",
         "lib_valo": "Valorisation suppléments de dialyse"
     },
     {
-        "ordre_epmsi": "18",
+        "ordre_epmsi": 18,
         "var": "rec_sdc",
         "lib_valo": "Valorisation supplément défibrilateur cardiaque"
     },
     {
-        "ordre_epmsi": "19",
+        "ordre_epmsi": 19,
         "var": "rec_i04",
         "lib_valo": "Valorisation suppléments Forfait Innovation I04"
     },
     {
-        "ordre_epmsi": "20",
+        "ordre_epmsi": 20,
         "var": "rec_ctc",
         "lib_valo": "Valorisation suppléments Car-t Cells"
     },
     {
-        "ordre_epmsi": "21",
+        "ordre_epmsi": 21,
         "var": "rec_src",
         "lib_valo": "Valorisation suppléments de surveillance continue"
     },
     {
-        "ordre_epmsi": "22",
+        "ordre_epmsi": 22,
         "var": "rec_stf",
         "lib_valo": "Valorisation suppléments de soins intensifs"
     }
-])
+], schema={"ordre_epmsi": pl.Int32, "var" : pl.Utf8, "lib_valo" : pl.Utf8})
 
 
 vvs_mco_lib_type_sej = pl.DataFrame([
     {
-        "type_fin": "0",
+        "type_fin": 0,
         "lib_type": "Séjours valorisés"
     },
     {
-        "type_fin": "1",
+        "type_fin": 1,
         "lib_type": "Séjours en CM 90"
     },
     {
-        "type_fin": "2",
+        "type_fin": 2,
         "lib_type": "Séjours en prestation inter-établissement"
     },
     {
-        "type_fin": "3",
+        "type_fin": 3,
         "lib_type": "Séjours en GHS 9999"
     },
     {
-        "type_fin": "4",
+        "type_fin": 4,
         "lib_type": "Séjours avec pb de chainage (hors NN, rdth et PO)"
     },
     {
-        "type_fin": "5",
+        "type_fin": 5,
         "lib_type": "Séjours avec pb de codage des variables bloquantes"
     },
     {
-        "type_fin": "6",
+        "type_fin": 6,
         "lib_type": "Séjours en attente de décision sur les droits du patient"
     },
     {
-        "type_fin": "7",
+        "type_fin": 7,
         "lib_type": "Séjours non facturable à l'AM hors PO"
     },
     {
-        "type_fin": "8",
+        "type_fin": 8,
         "lib_type": "Séjours avec PO sur patient arrivé décédé ou avec PO non facturables à l'AM"
     }
-])
+], schema={"type_fin": pl.Int32, "lib_type" : pl.Utf8})
 
 
 vvs_mco_lib_typvidhosp = pl.DataFrame([
     {
-        "typvidhosp": "1",
+        "typvidhosp": 1,
         "lib_typvidhosp": "0 : non pris en charge"
     },
     {
-        "typvidhosp": "2",
+        "typvidhosp": 2,
         "lib_typvidhosp": "3 : En attente des droits du patient"
     },
     {
-        "typvidhosp": "3",
+        "typvidhosp": 3,
         "lib_typvidhosp": "2 : En attente sur le taux de prise en charge"
     },
     {
-        "typvidhosp": "4",
+        "typvidhosp": 4,
         "lib_typvidhosp": "1 : Nouveau-né"
     },
     {
-        "typvidhosp": "5",
+        "typvidhosp": 5,
         "lib_typvidhosp": "1 : Radiothérapie"
     },
     {
-        "typvidhosp": "6",
+        "typvidhosp": 6,
         "lib_typvidhosp": "1 : Séances hors radiothérapie"
     },
     {
-        "typvidhosp": "7",
+        "typvidhosp": 7,
         "lib_typvidhosp": "1 : Durée de séjour = 0"
     },
     {
-        "typvidhosp": "8",
+        "typvidhosp": 8,
         "lib_typvidhosp": "1 : Autre type de séjour"
     }
-])
+], schema={"typvidhosp": pl.Int32, "lib_typvidhosp" : pl.Utf8})
 
 
 def vvs_mco_libelles_valo():
