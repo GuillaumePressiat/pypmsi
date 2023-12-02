@@ -54,23 +54,12 @@ python_valo_sej = pm.vvs_mco(pm.vvs_ghs_supp(vrsa,
 ### Tableau SV - Séjours valorisés e-PMSI
 
 ```python
-(
-    python_valo_sej
-    .group_by('type_fin')
-    .agg(pl.col('cle_rsa').count().alias('nb_rsa'),
-            pl.col('rec_totale').sum().round(2).alias('recette_br_avec_coeffs'))
-    .sort('type_fin')
-)
+pm.vvs_mco_epmsi_sv(python_valo_sej)
 ```
 
 ### Tableau RAV - Récapitulatif Activité valorisation e-PMSI
 
 ```python
-import polars.selectors as cs
-(
-    python_valo_sej
-    .select(cs.starts_with('rec'))
-    .sum()
-    .melt(variable_name = 'rubrique', value_name = 'recette')
-)
+pm.vvs_mco_epmsi_rav(python_valo_sej)
 ```
+
