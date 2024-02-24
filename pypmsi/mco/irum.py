@@ -6,7 +6,7 @@ from pypmsi.mco.rum_particuliers import rum_particuliers
 
 
 
-# fonction de lecture des RSA entre 2012 et 2023
+# fonction de lecture des RSA entre 2012 et 2024
 
 def irum(
     finess, annee: int, mois: int, path: str, typi: int = 3, tdiag: bool = True, filepath = "", n_rows = None

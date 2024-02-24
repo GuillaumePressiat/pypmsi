@@ -3,7 +3,7 @@ import polars as pl
 from pypmsi.utils import *
 
 def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bool = True, filepath = "", n_rows = None) -> dict:
-    """Découpage des RSA ; 2011 à 2023
+    """Découpage des RSA ; 2011 à 2024
     
     Args:
         finess (TYPE): Description
