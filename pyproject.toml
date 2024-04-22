@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pypmsi"
-version = "0.2.1"
+version = "0.2.2"
 description = "parser for french PMSI files in python / pola.rs"
 authors = ["GuillaumePressiat <guillaume.pressiat@chu-brest.fr>"]
 license = "AGPL3"

@@ -99,7 +99,8 @@ def vvs_ghs_supp(
         rsa = (
             rsa
             .with_columns(
-                pl.when(pl.col('anseqta') == '2023').then(0.993 * 1.0023)
+                pl.when(pl.col('anseqta') == '2024').then(0.993 * 1.0042)
+                  .when(pl.col('anseqta') == '2023').then(0.993 * 1.0023)
                   .when(pl.col('anseqta') == '2022').then(0.993 * 1.0013)
                   .when(pl.col('anseqta') == '2021').then(0.993 * 1.0019)
                   .when(pl.col('anseqta') == '2020').then(0.993)
@@ -118,7 +119,8 @@ def vvs_ghs_supp(
         rsa = (
             rsa
             .with_columns(
-                pl.when(pl.col('anseqta') == '2023').then(prudent * 1.0023)
+                pl.when(pl.col('anseqta') == '2024').then(prudent * 1.0042)
+                  .when(pl.col('anseqta') == '2023').then(prudent * 1.0023)
                   .when(pl.col('anseqta') == '2022').then(prudent * 1.0013)
                   .when(pl.col('anseqta') == '2021').then(prudent * 1.0019)
                   .otherwise(prudent).alias('cprudent')
