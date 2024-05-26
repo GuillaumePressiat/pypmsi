@@ -26,7 +26,7 @@ poetry install
 avec pip
 
 ```sh
-pip install https://github.com/GuillaumePressiat/pypmsi/releases/latest/download/pypmsi-0.2.2-py3-none-any.whl
+pip install https://github.com/GuillaumePressiat/pypmsi/releases/latest/download/pypmsi-0.2.3-py3-none-any.whl
 ```
 
 
