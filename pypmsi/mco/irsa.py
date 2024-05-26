@@ -119,19 +119,19 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
         .with_columns(
             [
                 pl.struct(["za", "aut_e"])
-                .map_elements(lambda x: x["za"][slice(x["aut_e"])])
+                .map_elements(lambda x: x["za"][slice(x["aut_e"])], return_dtype = pl.String)
                 .alias("zaut"),
                 pl.struct(["za", "rdth_s", "rdth_e"])
-                .map_elements(lambda x: x["za"][slice(x["rdth_s"], x["rdth_e"])])
+                .map_elements(lambda x: x["za"][slice(x["rdth_s"], x["rdth_e"])], return_dtype = pl.String)
                 .alias("zrdth"),
                 pl.struct(["za", "rum_e", "rum_s"])
-                .map_elements(lambda x: x["za"][slice(x["rum_s"], x["rum_e"])])
+                .map_elements(lambda x: x["za"][slice(x["rum_s"], x["rum_e"])], return_dtype = pl.String)
                 .alias("zum"),
                 pl.struct(["za", "das_s", "das_e"])
-                .map_elements(lambda x: x["za"][slice(x["das_s"], x["das_e"])])
+                .map_elements(lambda x: x["za"][slice(x["das_s"], x["das_e"])], return_dtype = pl.String)
                 .alias("zdas"),
                 pl.struct(["za", "actes_s", "actes_e"])
-                .map_elements(lambda x: x["za"][slice(x["actes_s"], x["actes_e"])])
+                .map_elements(lambda x: x["za"][slice(x["actes_s"], x["actes_e"])], return_dtype = pl.String)
                 .alias("zactes"),
             ]
         )
@@ -161,11 +161,11 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                 [
                     df["zactes"]
                     .str.extract_all("[A-Z]{4}[0-9]{3}")
-                    .map_elements(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))), return_dtype = pl.String)
                     .alias("stream_actes"),
                     df["zdas"]
                     .str.extract_all("[A-Z][0-9\+]{1,8}")
-                    .map_elements(lambda x: str(", ".join(set(x))))
+                    .map_elements(lambda x: str(", ".join(set(x))), return_dtype = pl.String)
                     .alias("stream_das"),
                 ]
             )
@@ -192,20 +192,20 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                 [
                     pl.col("zum")
                     .str.extract_all("[0-9]{2}[AB ][PCM]")
-                    .map_elements(lambda x: str(", ".join(x)))
+                    .map_elements(lambda x: str(", ".join(x)), return_dtype = pl.String)
                     .alias("stream_um"),
                     pl.col("UM")
                     .map_elements(
                         lambda x: str(
                             ", ".join(set(x.apply(lambda y: y[slice(sdpum, edpum)].rstrip())))
-                        )
+                        ), return_dtype = pl.String
                     )
                     .alias("stream_dpum"),
                     pl.col("UM")
                     .map_elements(
                         lambda x: str(
                             ", ".join(set(x.apply(lambda y: y[slice(sdrum, edrum)])))
-                        )
+                        ), return_dtype = pl.String
                     )
                     .str.strip_chars()
                     .alias("stream_drum"),
