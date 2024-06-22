@@ -197,14 +197,14 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
                     pl.col("UM")
                     .map_elements(
                         lambda x: str(
-                            ", ".join(set(x.apply(lambda y: y[slice(sdpum, edpum)].rstrip(), return_dtype = pl.String)))
+                            ", ".join(set(x.map_elements(lambda y: y[slice(sdpum, edpum)].rstrip(), return_dtype = pl.String)))
                         ), return_dtype = pl.String
                     )
                     .alias("stream_dpum"),
                     pl.col("UM")
                     .map_elements(
                         lambda x: str(
-                            ", ".join(set(x.apply(lambda y: y[slice(sdrum, edrum)], return_dtype = pl.String)))
+                            ", ".join(set(x.map_elements(lambda y: y[slice(sdrum, edrum)], return_dtype = pl.String)))
                         ), return_dtype = pl.String
                     )
                     .str.strip_chars()

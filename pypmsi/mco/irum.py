@@ -51,7 +51,7 @@ def irum(
 
     # calcul sur les dates (difftime)
     df = df.with_columns(
-        (pl.col("d8soue") - pl.col("d8eeue")).dt.days().alias("dureesejpart")
+        (pl.col("d8soue") - pl.col("d8eeue")).dt.total_days().alias("dureesejpart")
     )
 
     if typi == 1:
