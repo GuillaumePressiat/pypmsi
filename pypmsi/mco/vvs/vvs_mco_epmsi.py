@@ -21,7 +21,7 @@ def vvs_mco_epmsi_rav(vvs_df):
     vvs_df
     .select(cs.starts_with('rec'))
     .sum()
-    .melt(variable_name = 'rubrique', value_name = 'recette')
+    .unpivot(variable_name = 'rubrique', value_name = 'recette')
     .join(vvs_mco_libelles_valo()['vvs_mco_lib_valo'], on = 'rubrique', how = 'left')
     )
 
