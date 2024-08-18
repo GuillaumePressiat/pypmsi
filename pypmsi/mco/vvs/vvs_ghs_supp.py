@@ -211,18 +211,19 @@ def vvs_ghs_supp(
         )
 
 
+
     # préparer pie
     trans_pie = (
         pie
         .group_by('cle_rsa', 'code_pie')
         .agg(pl.col('nbsuppie').sum().alias('nbsuppie'))
-        .join(pl.DataFrame({'liste_pie' : ['STF', 'SRC', 'REA', 'REP', 'NN1', 'NN2', 'NN3']}), left_on = 'code_pie', right_on = 'liste_pie', how = 'cross')
+        .join(pl.DataFrame({'liste_pie' : ['STF', 'SRC', 'REA', 'REP', 'NN1', 'NN2', 'NN3']}), left_on = 'code_pie', right_on = 'liste_pie', how = 'right')
         .with_columns(pl.col("nbsuppie").fill_null(strategy="zero"))
-        .with_columns(pl.when(pl.col('liste_pie') == pl.col('code_pie')).then(pl.col("nbsuppie")).otherwise(pl.lit(0)).alias('nbsuppie'))
         .with_columns(pl.concat_str([pl.lit('pie_'), 'liste_pie']).str.to_lowercase().alias('liste_pie'))
-        .pivot(index = 'cle_rsa', values = 'nbsuppie', columns = 'liste_pie', aggregate_function = "sum")
+        .pivot(index = 'cle_rsa', values = 'nbsuppie', on = 'liste_pie', aggregate_function = "sum")
         .filter(~pl.col('cle_rsa').is_null())
-        )
+        .with_columns(pl.col("^pie.*$").fill_null(strategy="zero"))
+    )
 
     # préparer dip
     dip = (
