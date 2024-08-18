@@ -26,7 +26,7 @@ poetry install
 avec pip
 
 ```sh
-pip install https://github.com/GuillaumePressiat/pypmsi/releases/latest/download/pypmsi-0.2.3-py3-none-any.whl
+pip install https://github.com/GuillaumePressiat/pypmsi/releases/latest/download/pypmsi-0.2.6-py3-none-any.whl
 ```
 
 
@@ -158,9 +158,9 @@ rsa
 
 ```python
 (rsa['actes']
-	.filter(pl.col('cdccam').str.contains('EBLA'))
-	.group_by(['cdccam', 'nbexec'])
-	.count()
+    .filter(pl.col('cdccam').str.contains('EBLA'))
+    .group_by(['cdccam', 'nbexec'])
+    .count()
 )
 ```
 
@@ -178,10 +178,10 @@ shape: (2, 3)
 
 ```python
 (rsa['actes']
-	.filter(pl.col('cdccam').str.contains('EBLA'))
-	.join(rsa['rsa'], on = 'cle_rsa', how = 'inner')
-	.pivot('nbexec', 'cdccam', 'rsatype', 'count')
-	.fill_null(0)
+    .filter(pl.col('cdccam').str.contains('EBLA'))
+    .join(rsa['rsa'], on = 'cle_rsa', how = 'inner')
+    .pivot(index = 'cdccam', values = 'nbexec', on = 'rsatype', aggregate_function = 'sum')
+    .fill_null(0)
 )
 ```
 
@@ -199,22 +199,32 @@ shape: (2, 5)
 
 ```python
 (rsa['actes']
-	.filter(pl.col('cdccam').str.contains('EBLA'))
-	.join(rsa['rsa'], on = 'cle_rsa', how = 'inner')
-	.pivot('nbexec', 'cdccam', ['rsacmd', 'rsatype'], 'sum')
-	.fill_null(0)
+    .filter(pl.col('cdccam').str.contains('EBLA'))
+    .join(rsa['rsa'], on = 'cle_rsa', how = 'inner')
+    .pivot(index = ['rsacmd', 'rsatype'], values = 'nbexec', on = 'cdccam', 
+           separator = '-', aggregate_function = 'sum')
+    .fill_null(0)
 )
 ```
 
 ```
-shape: (2, 19)
-┌─────────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
-│ cdccam  ┆ 17  ┆ 11  ┆ 04  ┆ ... ┆ C   ┆ M   ┆ Z   ┆ K   │
-│ ---     ┆ --- ┆ --- ┆ --- ┆     ┆ --- ┆ --- ┆ --- ┆ --- │
-│ str     ┆ i64 ┆ i64 ┆ i64 ┆     ┆ i64 ┆ i64 ┆ i64 ┆ i64 │
-╞═════════╪═════╪═════╪═════╪═════╪═════╪═════╪═════╪═════╡
-│ EBLA003 ┆ 29  ┆ 1   ┆ 13  ┆ ... ┆ 24  ┆ 56  ┆ 9   ┆ 96  │
-│ EBLA002 ┆ 0   ┆ 0   ┆ 0   ┆ ... ┆ 0   ┆ 1   ┆ 1   ┆ 0   │
-└─────────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+shape: (39, 4)
+┌────────┬─────────┬─────────┬─────────┐
+│ rsacmd ┆ rsatype ┆ EBLA003 ┆ EBLA002 │
+│ ---    ┆ ---     ┆ ---     ┆ ---     │
+│ str    ┆ str     ┆ i32     ┆ i32     │
+╞════════╪═════════╪═════════╪═════════╡
+│ 15     ┆ C       ┆ 1       ┆ 0       │
+│ 01     ┆ M       ┆ 6       ┆ 0       │
+│ 17     ┆ M       ┆ 39      ┆ 0       │
+│ 16     ┆ M       ┆ 5       ┆ 0       │
+│ 17     ┆ K       ┆ 1       ┆ 0       │
+│ …      ┆ …       ┆ …       ┆ …       │
+│ 18     ┆ M       ┆ 1       ┆ 0       │
+│ 19     ┆ M       ┆ 1       ┆ 0       │
+│ 21     ┆ C       ┆ 1       ┆ 0       │
+│ 11     ┆ C       ┆ 1       ┆ 1       │
+│ 21     ┆ M       ┆ 1       ┆ 0       │
+└────────┴─────────┴─────────┴─────────┘
 ```
 
