@@ -160,11 +160,11 @@ def irsa(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
             .with_columns(
                 [
                     df["zactes"]
-                    .str.extract_all("[A-Z]{4}[0-9]{3}")
+                    .str.extract_all(r"[A-Z]{4}[0-9]{3}")
                     .map_elements(lambda x: str(", ".join(set(x))), return_dtype = pl.String)
                     .alias("stream_actes"),
                     df["zdas"]
-                    .str.extract_all("[A-Z][0-9\+]{1,8}")
+                    .str.extract_all(r"[A-Z][0-9\+]{1,8}")
                     .map_elements(lambda x: str(", ".join(set(x))), return_dtype = pl.String)
                     .alias("stream_das"),
                 ]

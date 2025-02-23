@@ -150,15 +150,15 @@ def irhs(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
             .with_columns(
                 [
                     df["zccam"]
-                    .str.extract_all("[A-Z]{4}[0-9]{3}")
+                    .str.extract_all(r"[A-Z]{4}[0-9]{3}")
                     .map_elements(lambda x: str(", ".join(set(x))), return_dtype = pl.String)
                     .alias("stream_ccam"),
                     df["zdas"]
-                    .str.extract_all("[A-Z0-9\+]{1,8}")
+                    .str.extract_all(r"[A-Z0-9\+]{1,8}")
                     .map_elements(lambda x: str(", ".join(set(x))), return_dtype = pl.String)
                     .alias("stream_das"),
                     df["zcsarr"]
-                    .str.extract_all("[a-zA-Z]{2,3}[0-9\+]{2,4}")
+                    .str.extract_all(r"[a-zA-Z]{2,3}[0-9\+]{2,4}")
                     .map_elements(lambda x: str(", ".join(set(x))), return_dtype = pl.String)
                     .alias("stream_csarr"),
                 ]

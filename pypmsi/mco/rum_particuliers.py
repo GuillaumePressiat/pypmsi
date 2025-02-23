@@ -99,15 +99,15 @@ def rum_particuliers(df, annee, typi, tdiag):
             .with_columns(
                 [
                     df["zactes"]
-                    .str.extract_all("[A-Z]{4}[0-9]{3}")
+                    .str.extract_all(r"[A-Z]{4}[0-9]{3}")
                     .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_actes"),
                     df["zdas"]
-                    .str.extract_all("[A-Z0-9\+]{1,8}")
+                    .str.extract_all(r"[A-Z0-9\+]{1,8}")
                     .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_das"),
                     df["zdad"]
-                    .str.extract_all("[a-zA-Z0-9\+]{1,8}")
+                    .str.extract_all(r"[a-zA-Z0-9\+]{1,8}")
                     .map_elements(lambda x: str(", ".join(set(x))))
                     .alias("stream_dad"),
                 ]
