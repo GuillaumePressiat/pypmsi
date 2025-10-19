@@ -5,7 +5,7 @@ def ir3a(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
     """Découpage des R3A ; 201x à 202x
     
     Args:
-        finess (TYPE): Description
+        finess (str): Description
         annee (int): Description
         mois (int): Description
         path (str): Description
@@ -29,9 +29,7 @@ def ir3a(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
     if filepath != "":
         file_in = filepath
     else:
-        file_in = (
-            path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "r3a"
-        )
+        file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'psy', 'r3a')
 
     df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
 

@@ -30,9 +30,7 @@ def irapss(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : 
     if filepath != "":
         file_in = filepath
     else:
-        file_in = (
-            path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rapss"
-        )
+        file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'had', 'rapss')
 
     df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
 

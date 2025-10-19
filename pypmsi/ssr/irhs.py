@@ -6,7 +6,7 @@ def irhs(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
     """Découpage des RHS ; 2011 à 2023
     
     Args:
-        finess (TYPE): Description
+        finess (str): Description
         annee (int): Description
         mois (int): Description
         path (str): Description
@@ -31,9 +31,7 @@ def irhs(finess, annee : int, mois : int, path : str, typi : int = 1, tdiag : bo
     if filepath != "":
         file_in = filepath
     else:
-        file_in = (
-            path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rhs.rtt.txt"
-        )
+        file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'ssr', 'rhs.rtt.txt')
 
     for_filler = get_formats(str(annee)[2:4], 'ssr', 'rhs')
 

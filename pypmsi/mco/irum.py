@@ -14,7 +14,7 @@ def irum(
     """Découpage des RUM / RSS au format ministériel
 
     Args:
-        finess (TYPE): Description
+        finess (str): Description
         annee (int): Description
         mois (int): Description
         path (str): Description
@@ -40,9 +40,7 @@ def irum(
     if filepath != "":
         file_in = filepath
     else:
-        file_in = (
-            path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "rss.txt"
-        )
+        file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', 'rss.ini.txt')
         
     df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
 
