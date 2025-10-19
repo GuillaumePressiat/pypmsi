@@ -27,9 +27,7 @@ def itra(finess, annee : int, mois : int, path : str, champ : str = "mco", filep
     if filepath != "":
         file_in = filepath
     else:
-        file_in = (
-            path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + ext
-        )
+        file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, champ, ext)
 
     if ('{annee}{mois:02}'.format(annee = annee, mois = mois) >= '202303') & (champ == 'mco'):
         df = (

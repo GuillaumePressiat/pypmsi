@@ -263,32 +263,84 @@ def polars_to_pandas(df_d):
     elif (type(df_d) == dict):
         return {k: polars_to_pandas(v) for k, v in df_d.items()}
 
-# def noyau_pmsi(finess, annee : int, mois : int, path : str, **kwargs):
-# 
-#     noyau = {'finess' : finess, 'annee' : annee, 'mois' : mois, 'path' : path}
-#     for k,v in kwargs.items():
-#         noyau[k] = v
-#     return noyau
 
-# def fichier_pmsi(p : dict, extension = "rsa"):
-#     f = str(p['finess']) + "." + str(p['annee']) + "." + str(p['mois']) + "." + extension
-#     return f
+def get_atih_mappings() -> pl.DataFrame:
+    atih_mappings = pl.DataFrame(
+    schema={
+        "debut": pl.Utf8,
+        "fin": pl.Utf8,
+        "champ_": pl.Utf8,
+        "outil_atih": pl.Utf8,
+        "pmsi_formatter": pl.Utf8,
+        "zip_formatter": pl.Utf8,
+    },
+    data=[
+        # --- MCO ---
+        ("201101", "202304", "mco", "genrsa",  "{finess}.{annee}.{mois}",  "{finess}.{annee}.{mois}.{zipfratime}.{ziptype}.zip"),
+        ("202305", "202312", "mco", "genrsa",  "{finess}.{annee}.{mois}",  "{finess}.{annee}.{mois}.{zipisotime}.{ziptype}.zip"),
+        ("202401", "202507", "mco", "druides", "{finess}.{annee}.{mois}",  "{finess}.{annee}.{mois}.{zipisotime}.{ziptype}.zip"),
+        ("202508", "209912", "mco", "druides", "{finess}.{annee}.{mois2}", "{finess}.{annee}.{mois2}.MCO.SEJOURS.SEJOURS.{zipisotime}.{ziptype}.zip"),
 
-# def map_arguments(arguments):
-#     
-#     d = arguments.items()
-#     # for key, value in d:
-#     #     print(f"{key}: {value}")
-#     
-#     if ('filepath' in arguments):
-#         arguments['situation'] = 'fichier'
-# 
-#     if (('finess' in arguments) & 
-#         ('annee' in arguments) &
-#         ('mois' in arguments) & 
-#         ('path' in arguments)):
-#         arguments['situation'] = 'noyau_pmsi'
-#         arguments['filepath'] = arguments['path'] + '/' + str(arguments['finess']) + "." + str(arguments['annee']) + "." + str(arguments['mois']) + "." 
-# 
-#     return arguments
+        # --- MCO.RSFACE ---
+        ("201101", "202304", "mco.rsface", "preface", "{finess}.{annee}.{mois}",  "{finess}.{annee}.{mois}.{zipfratime}.{ziptype}.zip"),
+        ("202305", "202312", "mco.rsface", "preface", "{finess}.{annee}.{mois}",  "{finess}.{annee}.{mois}.{zipisotime}.{ziptype}.zip"),
+        ("202401", "202507", "mco.rsface", "druides", "{finess}.{annee}.{mois}",  "{finess}.{annee}.{mois}.{zipisotime}.{ziptype}.zip"),
+        ("202508", "209912", "mco.rsface", "druides", "{finess}.{annee}.{mois2}", "{finess}.{annee}.{mois2}.MCO.RSFACE.RSFACE.{zipisotime}.{ziptype}.zip"),
+
+        # --- PSY ---
+        ("200000", "202412", "psy", "pivoine", "{finess}.{annee}.{mois}",  "{finess}.{annee}.{mois}.{zipisotime}.{ziptype}.zip"),
+        ("202501", "209912", "psy", "druides", "{finess}.{annee}.{mois2}", "{finess}.{annee}.{mois2}.PSY.SEJOURS.SEJOURS.{zipisotime}.{ziptype}.zip"),
+
+        # --- SSR ---
+        ("201101", "202407", "ssr", "genrha",  "{finess}.{annee}.{mois}",  "{finess}.{annee}.{mois}.{zipfratime}.{ziptype}.zip"),
+        ("202408", "209912", "ssr", "druides", "{finess}.{annee}.{mois2}", "{finess}.{annee}.{mois2}.SMR.SEJOURS.SEJOURS.{zipisotime}.{ziptype}.zip"),
+
+        # --- HAD ---
+        ("201101", "202507", "had", "paprica", "{finess}.{annee}.{mois}",  "{finess}.{annee}.{mois}.{zipfratime}.{ziptype}.zip"),
+        ("202508", "209912", "had", "druides", "{finess}.{annee}.{mois2}", "{finess}.{annee}.{mois2}.HAD.SEJOURS.SEJOURS.{zipisotime}.{ziptype}.zip"),
+    ], orient = "row"
+    )
+    
+    return atih_mappings
+
+def pmsi_check_periode(annee: int, mois: int, champ: str) -> pl.DataFrame:
+
+    mois2 = str(mois).zfill(2)
+    an_mois = "{annee}{mois2}".format(annee = annee, mois2 = mois2) 
+
+    if (annee < 2011) | (annee > 2025):
+        print(annee)
+        raise ValueError('Année non prise en charge')
+
+    if (mois < 0) | (mois > 12):
+        raise ValueError('Mois non prise en charge')
+
+    periode_pmsi = (
+        get_atih_mappings()
+        .with_columns(pl.lit(mois2).alias('mois2'), 
+                     pl.lit(annee).alias('annee'),
+                      pl.lit(mois).alias('mois'))
+        .filter(
+            (pl.col("champ_") == pl.lit(champ)) &
+            (pl.lit(an_mois).cast(pl.Utf8) >= pl.col("debut")) &
+            (pl.lit(an_mois).cast(pl.Utf8) <= pl.col("fin"))
+            )
+        )
+
+    return periode_pmsi
+
+def pmsi_format_fullname(finess: str, annee: int, mois: int, champ: str, pmsi_extension: str) -> str:
+
+    template_pmsi = pmsi_check_periode(annee, mois, champ)
+    mois2 = str(mois).zfill(2)
+    
+    pmsi_formatter = (template_pmsi.select('pmsi_formatter').to_series())[0] + '.{pmsi_extension}'
+
+    if 'mois2' in pmsi_formatter:
+        pmsi_file = pmsi_formatter.format(finess = finess, annee = annee, mois2 = mois2, pmsi_extension = pmsi_extension)
+    else:
+        pmsi_file = pmsi_formatter.format(finess = finess, annee = annee, mois = mois, pmsi_extension = pmsi_extension)
+        
+    return pmsi_file
+
 

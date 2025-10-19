@@ -19,26 +19,16 @@ def imed_had(finess, annee : int, mois : int, path : str, typmed : str = "in", f
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path
-                + "/"
-                + str(finess)
-                + "."
-                + str(annee)
-                + "."
-                + str(mois)
-                + "."
-                + "med.txt"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'had', 'med.txt')
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "had", "rpss_med", annee)
     else:
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "med*"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'had', 'med*')
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "had", "rapss_med", annee)
 

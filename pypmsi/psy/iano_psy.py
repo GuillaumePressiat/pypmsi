@@ -5,7 +5,7 @@ def iano_psy(finess, annee : int, mois : int, path : str, typano :str ="in", fil
     """Découper le ano in ou out de la psy
     
     Args:
-        finess (TYPE): Description
+        finess (str): Description
         annee (int): Description
         mois (int): Description
         path (str): Description
@@ -19,25 +19,15 @@ def iano_psy(finess, annee : int, mois : int, path : str, typano :str ="in", fil
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path + "/"
-                + str(finess)
-                + "."
-                + str(annee)
-                + "."
-                + str(mois)
-                + "."
-                + "anohosp.txt"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'psy', 'anohosp.txt')
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "psy", "rps_ano", annee)
     else:
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "ano"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'psy', 'ano')
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "psy", "rpsa_ano", annee)
 
