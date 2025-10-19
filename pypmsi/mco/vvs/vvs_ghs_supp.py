@@ -18,7 +18,7 @@ def vvs_ghs_supp(
         cgeo = 1, 
         prudent = None,
         bee = True, 
-        csegur = 1.0019):
+        csegur = 1.0035):
 
     
     n_anseqta = rsa['anseqta'].unique().shape[0]
@@ -99,7 +99,8 @@ def vvs_ghs_supp(
         rsa = (
             rsa
             .with_columns(
-                pl.when(pl.col('anseqta') == '2024').then(0.993 * 1.0042)
+                pl.when(pl.col('anseqta') == '2025').then(0.993 * 1.0035)
+                  .when(pl.col('anseqta') == '2024').then(0.993 * 1.0042)
                   .when(pl.col('anseqta') == '2023').then(0.993 * 1.0023)
                   .when(pl.col('anseqta') == '2022').then(0.993 * 1.0013)
                   .when(pl.col('anseqta') == '2021').then(0.993 * 1.0019)
@@ -119,7 +120,8 @@ def vvs_ghs_supp(
         rsa = (
             rsa
             .with_columns(
-                pl.when(pl.col('anseqta') == '2024').then(prudent * 1.0042)
+                pl.when(pl.col('anseqta') == '2025').then(prudent * 1.0035)
+                  .when(pl.col('anseqta') == '2024').then(prudent * 1.0042)
                   .when(pl.col('anseqta') == '2023').then(prudent * 1.0023)
                   .when(pl.col('anseqta') == '2022').then(prudent * 1.0013)
                   .when(pl.col('anseqta') == '2021').then(prudent * 1.0019)
@@ -149,7 +151,9 @@ def vvs_ghs_supp(
         rsa
         .filter(pl.col('noghs').str.slice(0,1) == 'I')
         .with_columns(
-            pl.when(pl.col('noghs') == 'I08').then(3119).otherwise(None).cast(pl.Float64).alias('t_base'))
+            pl.when(pl.col('noghs') == 'I08').then(3119)
+              .when(pl.col('noghs') == 'I17').then(4770)
+              .otherwise(None).cast(pl.Float64).alias('t_base'))
         .with_columns(
             pl.col('t_base').alias('rec_bee'),
             pl.col('t_base').alias('rec_totale'),
@@ -221,7 +225,8 @@ def vvs_ghs_supp(
         .with_columns(pl.col("nbsuppie").fill_null(strategy="zero"))
         .with_columns(pl.concat_str([pl.lit('pie_'), 'liste_pie']).str.to_lowercase().alias('liste_pie'))
         .pivot(index = 'cle_rsa', values = 'nbsuppie', on = 'liste_pie', aggregate_function = "sum")
-        .filter(~pl.col('cle_rsa').is_null())
+        #.filter(~pl.col('cle_rsa').is_null())
+        .join(rsa.select('cle_rsa'), how = 'right', left_on = 'cle_rsa', right_on = 'cle_rsa')
         .with_columns(pl.col("^pie.*$").fill_null(strategy="zero"))
     )
 
@@ -322,14 +327,31 @@ def vvs_ghs_supp(
            (pl.col('tpovii')   * pl.col('nb_povii') * pl.col('cprudent') * cgeo).alias('rec_povii'),
            (pl.col('tpoviii')   * pl.col('nb_poviii') * pl.col('cprudent') * cgeo).alias('rec_poviii'),
            (pl.col('tpoix')   * pl.col('nb_poix') * pl.col('cprudent') * cgeo).alias('rec_poix'),
-           (pl.col('tpoa')   * pl.col('nb_poa') * pl.col('cprudent') * cgeo).alias('rec_poa')
+           (pl.col('tpoa')   * pl.col('nb_poa') * pl.col('cprudent') * cgeo).alias('rec_poa'),
+        # pie
+        (pl.col('tsc')       * pl.col('pie_src') * pl.col('cprudent') * cgeo).alias('rec_pie_src'),
+        (pl.col('tsi')   * pl.col('pie_stf') * pl.col('cprudent') * cgeo).alias('rec_pie_stf'),
+        (pl.col('trea')   * pl.col('pie_rea') * pl.col('cprudent') * cgeo).alias('rec_pie_rea'),
+        (pl.col('trep')   * pl.col('pie_rep') * pl.col('cprudent') * cgeo).alias('rec_pie_rep'),
+        (pl.col('tnn1')   * pl.col('pie_nn1') * pl.col('cprudent') * cgeo).alias('rec_pie_nn1'),
+        (pl.col('tnn2')   * pl.col('pie_nn2') * pl.col('cprudent') * cgeo).alias('rec_pie_nn2'),
+        (pl.col('tnn3')   * pl.col('pie_nn3') * pl.col('cprudent') * cgeo).alias('rec_pie_nn3'),
+        )
+        .with_columns(
+            (pl.col('rec_src') + pl.col('rec_pie_src')).alias('rec_src'),
+            (pl.col('rec_stf') + pl.col('rec_pie_stf')).alias('rec_stf'),
+            (pl.col('rec_rea') + pl.col('rec_pie_rea')).alias('rec_rea'),
+            (pl.col('rec_rep') + pl.col('rec_pie_rep')).alias('rec_rep'),
+            (pl.col('rec_nn1') + pl.col('rec_pie_nn1')).alias('rec_nn1'),
+            (pl.col('rec_nn2') + pl.col('rec_pie_nn2')).alias('rec_nn2'),
+            (pl.col('rec_nn3') + pl.col('rec_pie_nn3')).alias('rec_nn3'),
         )
         .with_columns(
             pl.sum_horizontal('rec_hhs', 'rec_edpahs', 'rec_edpcahs', 'rec_ehhs', 'rec_dip').alias('rec_dialhosp'),
             pl.sum_horizontal('rec_rdt5', 'rec_prot', 'rec_ict', 'rec_cyb', 'rec_gam', 'rec_rcon1',
                 'rec_rcon2', 'rec_tciea', 'rec_tcies', 'rec_aie', 'rec_rcon3').alias('rec_rdt_tot'),
             pl.sum_horizontal('rec_poi', 'rec_poii', 'rec_poiii', 'rec_poiv', 'rec_pov', 'rec_povi',
-              'rec_povii', 'rec_poviii', 'rec_poix', 'rec_poix', 'rec_poa').alias('rec_po_tot')
+              'rec_povii', 'rec_poviii', 'rec_poix', 'rec_poa').alias('rec_po_tot')
             )
         .collect()
         )
@@ -343,7 +365,7 @@ def vvs_ghs_supp(
         .with_columns(pl.lit(None, pl.Float64).alias('rec_rehosp_ghm'))
         .with_columns(
             pl.sum_horizontal(['rec_bee', 'rec_rep', 'rec_rea', 'rec_stf', 'rec_src', 'rec_nn1', 'rec_nn2', 'rec_nn3',
-                'rec_dialhosp', 'rec_caishyp', 'rec_aph', 'rec_ant', 'rec_rap', 'rec_rehosp_ghm', 'rec_rdt_tot', 'rec_po_tot'])
+                'rec_dialhosp', 'rec_caishyp', 'rec_aph', 'rec_ant', 'rec_rap', 'rec_rehosp_ghm', 'rec_rdt_tot', 'rec_po_tot', 'rec_sdc', 'rec_ctc'])
             .alias('rec_totale')
             )
         )
