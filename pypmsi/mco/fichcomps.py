@@ -6,7 +6,7 @@ def imed_mco(finess, annee : int, mois : int, path : str, typmed : str = "in", f
     """Découper le fichier med du in ou du out
     
     Args:
-        finess (TYPE): Description
+        finess (str): Description
         annee (int): Description
         mois (int): Description
         path (str): Description
@@ -19,26 +19,14 @@ def imed_mco(finess, annee : int, mois : int, path : str, typmed : str = "in", f
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path
-                + "/"
-                + str(finess)
-                + "."
-                + str(annee)
-                + "."
-                + str(mois)
-                + "."
-                + "med.txt"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', 'med.txt')
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rum_med", annee)
     else:
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "med*"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', 'med*')
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rsa_med", annee)
 
@@ -60,7 +48,7 @@ def idmi_mco(finess, annee : int, mois : int, path : str, typdmi : str = "in", f
     """Découper le fichier dmi du in ou du out
     
     Args:
-        finess (TYPE): Description
+        finess (str): Description
         annee (int): Description
         mois (int): Description
         path (str): Description
@@ -73,26 +61,16 @@ def idmi_mco(finess, annee : int, mois : int, path : str, typdmi : str = "in", f
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path
-                + "/"
-                + str(finess)
-                + "."
-                + str(annee)
-                + "."
-                + str(mois)
-                + "."
-                + "dmi.txt"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', "dmi.txt")
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rum_dmi", annee)
     else:
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "dmip"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', "dmip")
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rsa_dmi", annee)
 
@@ -114,7 +92,7 @@ def idiap_mco(finess, annee : int, mois : int, path : str, typdiap : str = "out"
     """Découper le fichier diap du in ou du out
     
     Args:
-        finess (TYPE): Description
+        finess (str): Description
         annee (int): Description
         mois (int): Description
         path (str): Description
@@ -127,26 +105,16 @@ def idiap_mco(finess, annee : int, mois : int, path : str, typdiap : str = "out"
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path
-                + "/"
-                + str(finess)
-                + "."
-                + str(annee)
-                + "."
-                + str(mois)
-                + "."
-                + "diap.txt"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', "diap.txt")
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "ffc_in", annee)
     else:
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "diap"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', "diap")
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rsa_diap", annee)
 
@@ -158,7 +126,7 @@ def ipie_mco(finess, annee : int, mois : int, path : str, typpie : str = "out", 
     """Découper le fichier PIE du out
     
     Args:
-        finess (TYPE): Description
+        finess (str): Description
         annee (int): Description
         mois (int): Description
         path (str): Description
@@ -173,9 +141,8 @@ def ipie_mco(finess, annee : int, mois : int, path : str, typpie : str = "out", 
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "pie"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', "pie")
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rsa_pie", annee).with_columns(pl.col('nbsuppie').cast(pl.Int32))
 
@@ -186,7 +153,7 @@ def ipo(finess, annee : int, mois : int, path : str, typpo : str = "out", filepa
     """Découper le fichier PORG du out
     
     Args:
-        finess (TYPE): Description
+        finess (str): Description
         annee (int): Description
         mois (int): Description
         path (str): Description
@@ -199,26 +166,16 @@ def ipo(finess, annee : int, mois : int, path : str, typpo : str = "out", filepa
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path
-                + "/"
-                + str(finess)
-                + "."
-                + str(annee)
-                + "."
-                + str(mois)
-                + "."
-                + "porg.txt"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', "porg.txt")
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "ffc_in", annee)
     else:
         if filepath != "":
             file_in = filepath
         else:
-            file_in = (
-                path + "/" + str(finess) + "." + str(annee) + "." + str(mois) + "." + "porg"
-            )
+            file_in = path + '/' + pmsi_format_fullname(finess, annee, mois, 'mco', "porg")
+
         df = pl.read_csv(file_in, has_header=False, skip_rows=0, new_columns=["l"], n_rows = n_rows)
         df = parse_pmsi_fwf(df, "mco", "rsa_po", annee)
 
