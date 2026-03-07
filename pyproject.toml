@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "pypmsi"
-version = "0.3.0"
+version = "0.3.1"
 description = "parser for french PMSI files in python / pola.rs"
 authors = ["GuillaumePressiat <guillaume.pressiat@chu-brest.fr>"]
 license = "AGPL3"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 polars = "^1.16.0"
 
 
