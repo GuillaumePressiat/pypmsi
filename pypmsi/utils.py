@@ -308,7 +308,7 @@ def pmsi_check_periode(annee: int, mois: int, champ: str) -> pl.DataFrame:
     mois2 = str(mois).zfill(2)
     an_mois = "{annee}{mois2}".format(annee = annee, mois2 = mois2) 
 
-    if (annee < 2011) | (annee > 2025):
+    if (annee < 2011) | (annee > 2026):
         print(annee)
         raise ValueError('Année non prise en charge')
 
