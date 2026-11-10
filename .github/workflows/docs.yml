@@ -26,9 +26,10 @@ jobs:
           python-version: "3.12"
       - name: Dépendances
         run: |
-          pip install -r docs/requirements.txt
+          pip install poetry
+          poetry install --only docs --no-root
       - name: Construction (strict)
-        run: mkdocs build --strict
+        run: poetry run mkdocs build --strict
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
@@ -42,3 +43,4 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
