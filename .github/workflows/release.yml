@@ -1,61 +1,83 @@
-# Release GitHub à chaque étiquette de version : 0.2.0, v0.2.0, ou version de test
-# 0.2.0+alpha1.0, 0.2.0+alpha2.0… Rien n'est publié sur PyPI.
-#
-# - la partie avant « + » doit être la version de pyproject.toml ;
-# - une étiquette avec suffixe donne une pré-release GitHub, et la wheel porte la version
-#   complète (pypmsi-0.2.0+alpha1.0-py3-none-any.whl) : pip affiche ainsi exactement
-#   quelle version de test est installée.
-#
-# Pour publier : mettre à jour `version` dans pyproject.toml, committer, puis
-#   git tag 0.2.0+alpha1.0 && git push origin 0.2.0+alpha1.0     (version de test)
-#   git tag v0.2.0 && git push origin v0.2.0                      (version finale)
 name: Release
 
 on:
   push:
-    tags: ["v*", "[0-9]*"]
+    tags:
+      - "v*"          # ex. v0.3.0, v0.3.0rc1
 
 permissions:
-  contents: write      # créer la release et y attacher les fichiers
+  contents: read
 
 jobs:
-  release:
+  build:
+    name: Build sdist + wheel
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Version de l'étiquette
+      - name: Vérifier que le tag correspond à la version du pyproject
         run: |
-          TAG="${GITHUB_REF_NAME#v}"          # 0.2.0+alpha1.0
-          BASE="${TAG%%+*}"                   # 0.2.0
-          VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['tool']['poetry']['version'])")
-          if [ "$BASE" != "$VERSION" ]; then
-            echo "::error::L'étiquette $GITHUB_REF_NAME ($BASE) ne correspond pas à la version $VERSION de pyproject.toml"
+          TAG="${GITHUB_REF_NAME#v}"
+          VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          echo "Tag: $TAG — pyproject: $VERSION"
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "::error::Le tag v$TAG ne correspond pas à la version $VERSION du pyproject.toml"
             exit 1
           fi
-          if [ "$TAG" != "$BASE" ]; then PRE=true; else PRE=false; fi
-          echo "TAG=$TAG" >> "$GITHUB_ENV"
-          echo "PRE=$PRE" >> "$GITHUB_ENV"
-          echo "Version $TAG (pré-release : $PRE)"
 
-
-      - name: Construction (wheel et sdist)
+      - name: Build
         run: |
-          # version de test : la version complète est inscrite dans les fichiers construits
-          if [ "$PRE" = true ]; then
-            sed -i "s/^version = \".*\"/version = \"$TAG\"/" pyproject.toml
-          fi
-          pip install build
+          python -m pip install --upgrade build twine
           python -m build
-          ls dist/
+          python -m twine check dist/*
 
-      - name: Release GitHub
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish-pypi:
+    name: Publication sur PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pypmsi
+    permissions:
+      id-token: write   # Trusted Publishing (OIDC), pas de token à stocker
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: Release GitHub
+    needs: publish-pypi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Créer la release avec notes auto
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          OPTIONS="--generate-notes"
-          if [ "$PRE" = true ]; then OPTIONS="$OPTIONS --prerelease"; fi
-          gh release create "$GITHUB_REF_NAME" dist/* --title "pypmsi $TAG" $OPTIONS
+          PRERELEASE=""
+          if [[ "$GITHUB_REF_NAME" =~ (a|b|rc)[0-9]+$ ]]; then
+            PRERELEASE="--prerelease"
+          fi
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "$GITHUB_REF_NAME" \
+            --generate-notes $PRERELEASE
