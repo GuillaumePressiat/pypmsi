@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "v*"          # ex. v0.3.0, v0.3.0rc1
+      - "[0-9]*"          # ex. v0.3.0, v0.3.0rc1
 
 permissions:
   contents: read
