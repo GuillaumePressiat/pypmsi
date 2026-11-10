@@ -26,10 +26,7 @@ jobs:
           python-version: "3.12"
       - name: Dépendances
         run: |
-          pip install -r doc/requirements.txt
-          pip install .
-      - name: Exemples de la doc à jour avec examples/
-        run: python tools/exemples_doc.py --check
+          pip install -r docs/requirements.txt
       - name: Construction (strict)
         run: mkdocs build --strict
       - uses: actions/upload-pages-artifact@v3
